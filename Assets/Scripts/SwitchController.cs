@@ -37,17 +37,17 @@ public class SwitchController : MonoBehaviour
             _switchInteractionText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
-                /*if (_light.enabled == true)
+                if (_light.gameObject.activeSelf == true)
                 {
-                    
-                    _light.StopFlicker();
+
+                    _light.gameObject.SetActive(false);
                 }
                 else
                 {
-                    _light.StartFlicker();
-                }*/
+                    _light.gameObject.SetActive(true);
+                }
                 _light.ToggleLight();
-                Debug.Log("Is light on? " + _light.enabled);
+                Debug.Log("Is light active? " + _light.gameObject.activeSelf);
             }
         }
         else
