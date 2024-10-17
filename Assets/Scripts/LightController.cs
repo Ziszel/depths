@@ -3,6 +3,7 @@ using UnityEngine;
 public class LightController : MonoBehaviour
 {
     private Light _flickeringLight;
+    private float _flickerInterval = 0.1f;
     private float _timer = 0;
 
     [Header("Flicker Settings (input -1 for random flickering)")]
@@ -19,8 +20,18 @@ public class LightController : MonoBehaviour
         if (_isFlickering) 
         { 
             // Check if -1 was input for random flickering, if not, use custom flicker interval input
-            if (_customFlickerInterval == -1) { HandleFlicker(Random.Range(0.05f, 2.0f)); Debug.Log("RANDOMLY FLICKERING!");  }
-            else { HandleFlicker(_customFlickerInterval); }
+            if (_customFlickerInterval == -1) 
+            {
+                if (_timer == 0 )
+                {
+                    _flickerInterval = Random.Range(0.0f, 1.0f);
+                }
+                HandleFlicker(_flickerInterval); 
+            }
+            else 
+            { 
+                HandleFlicker(_customFlickerInterval); 
+            }
         }
     }
     private void HandleFlicker(float flickerInterval)
