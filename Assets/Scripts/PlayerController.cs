@@ -110,4 +110,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    private void OnDisable()
+    {
+        _inputActions.Player.Disable();
+    }
 }
