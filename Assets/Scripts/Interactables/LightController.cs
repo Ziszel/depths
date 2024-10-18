@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class LightController : MonoBehaviour
+public class LightController : MonoBehaviour, ISwitchable
 {
-    private Light _flickeringLight;
+    private Light _lightComponent;
     private float _flickerInterval = 0.1f;
     private float _timer = 0;
 
@@ -12,7 +12,7 @@ public class LightController : MonoBehaviour
 
     void Start()
     {
-        _flickeringLight = GetComponent<Light>();
+        _lightComponent = GetComponent<Light>();
     }
 
     void Update()
@@ -39,7 +39,7 @@ public class LightController : MonoBehaviour
         _timer += Time.deltaTime;
         if (_timer > flickerInterval)
         {
-            ToggleLight();
+            Toggle();
             _timer = 0;
         }
     }
@@ -52,20 +52,29 @@ public class LightController : MonoBehaviour
     public void StopFlicker()
     {
         _isFlickering = false;
-        _flickeringLight.enabled = true; 
+        _lightComponent.enabled = true; 
     }
     public void TurnOnLight()
     {
-        _flickeringLight.enabled = true;
+        _lightComponent.enabled = true;
     }
 
     public void TurnOffLight()
     {
-        _flickeringLight.enabled = false;
+        _lightComponent.enabled = false;
     }
 
-    public void ToggleLight()
+    public void Toggle()
     {
-        _flickeringLight.enabled = !_flickeringLight.enabled;
+        // Check if the light component exists before toggling
+        if (_lightComponent != null)
+        {
+            _lightComponent.enabled = !_lightComponent.enabled;
+            Debug.Log("Light toggled: " + _lightComponent.enabled);
+        }
+        else
+        {
+            Debug.LogError("Light component is not assigned.");
+        }
     }
 }
