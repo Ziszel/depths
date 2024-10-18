@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
     }
 
     public void ShowOptions()
