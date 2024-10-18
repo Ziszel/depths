@@ -4,6 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - Monster
   - Light
   - InteractionText
   layers:
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
