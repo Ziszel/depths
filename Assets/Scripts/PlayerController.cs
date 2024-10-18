@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Event delegates
+    public Action<bool> OnPlayerLookingAtMonster;
+    
     [Header("Movement velocity")]
     [SerializeField] private float movementVelocity = 5.0f;
     [SerializeField] private float walkVelocity = 5.0f;
@@ -14,10 +18,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSprintVelocity = 10.0f;
     [SerializeField] private Transform cameraTransform;
     
+    [SerializeField] private float fieldOfViewAngle = 60; // player's cone of vision
+    
+    // Components
     private PlayerInput _inputActions;
-    private Rigidbody _rb;
     private Vector2 _moveInput;
+    private Rigidbody _rb;
     private Camera _mainCamera;
+    private Monster _monster;
     
     private void Awake()
     {
@@ -31,8 +39,14 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
+        _monster = FindAnyObjectByType<Monster>();
     }
-    
+
+    private void Update()
+    {
+        IsPlayerLookingAtMonster();
+    }
+
     private void FixedUpdate()
     {
         SetMovementValues();
@@ -73,5 +87,27 @@ public class PlayerController : MonoBehaviour
         
         // Rotate the player to face the direction the camera is looking at
         transform.rotation =  Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
+    }
+
+    public void IsPlayerLookingAtMonster()
+    {
+        Vector3 directionOfRay = (_monster.transform.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position, directionOfRay);
+
+        if ((Vector3.Angle(directionOfRay, transform.forward)) < fieldOfViewAngle / 2)
+        {
+            Debug.DrawRay(transform.position, directionOfRay * 100, Color.green);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            {
+                if (hit.collider.CompareTag("Monster"))
+                {
+                    OnPlayerLookingAtMonster?.Invoke(true);
+                }
+                else
+                {
+                    OnPlayerLookingAtMonster?.Invoke(false);
+                }
+            }
+        }
     }
 }
