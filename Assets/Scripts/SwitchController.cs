@@ -34,6 +34,7 @@ public class SwitchController : MonoBehaviour
 
         if (_isInProximity)
         {
+            _switchInteractionText.SetText("Press E to toggle light ON/OFF");
             _switchInteractionText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
