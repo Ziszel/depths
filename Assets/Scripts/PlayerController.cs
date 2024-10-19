@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
             // Safety check against null
             if (_interactable == null)
             {
+                Debug.Log("No object currently interactable");
                 return;
             }
             
