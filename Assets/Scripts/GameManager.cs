@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     private float _bestTime;
-    private GameObject _optionsMenuCanvas; /* Storing in this class so we can access it across levels */
+
+    /* Storing in this class so we can access them across levels */
+    private GameObject _mainMenuCanvas;
+    private GameObject _optionsMenuCanvas; 
 
     public void Awake()
     {
@@ -22,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
         _optionsMenuCanvas.SetActive(false);
     }
@@ -29,13 +33,14 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(string levelName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
+        _optionsMenuCanvas.SetActive(false);
     }
 
     // Ideally, we don't want mainmenu canvas to be a parameter here, as we want this to be able to be called from in-game
-    public void ShowOptionsCanvas(bool isFromMainMenu, GameObject mainMenuCanvas)
+    public void ShowOptionsCanvas(bool isFromMainMenu)
     {
         // Show options menu overlay (should work on MainMenu and in game)
-        Debug.Log("ShowOptions() called");
+        Debug.Log("ShowOptionsCanvas() called");
 
         if (_optionsMenuCanvas)
         {
@@ -43,28 +48,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GameManager ShowOptions(): Could not find the options menu canvas object");
+            Debug.Log("GameManager ShowOptionsCanvas(): Could not find the options menu canvas object");
         }
-        if (mainMenuCanvas)
+        if (_mainMenuCanvas)
         {
-            mainMenuCanvas.SetActive(false);
+            _mainMenuCanvas.SetActive(false);
         }
         else
         {
-            Debug.LogError("GameManager ShowOptions(): Could not find the main menu canvas object");
+            Debug.Log("GameManager ShowOptionsCanvas(): Could not find the main menu canvas object");
         }
     }
 
     // Maybe rename this function - backto main menu from options or something
-    public void ShowMainMenuCanvas(GameObject mainMenuCanvas)
+    public void ShowMainMenuCanvas()
     {
-        if (mainMenuCanvas)
+        if (_mainMenuCanvas)
         {
-            mainMenuCanvas.SetActive(true);
+            _mainMenuCanvas.SetActive(true);
         }
         else
         {
-            Debug.LogError("GameManager ShowMainMenu(): Could not find the main menu canvas object");
+            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the main menu canvas object");
         }
         if (_optionsMenuCanvas)
         {
@@ -72,7 +77,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GameManager ShowMainMenu(): Could not find the options menu canvas object");
+            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the options menu canvas object");
         }
     }
 
