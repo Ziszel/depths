@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-//using static UnityEngine.Rendering.DebugUI;
 
 public class OptionsManager : MonoBehaviour
 {
@@ -32,10 +31,9 @@ public class OptionsManager : MonoBehaviour
         _optionsBackBtn = transform.Find("BackBtn").GetComponent<Button>();
         _optionsBackBtn.onClick.AddListener(OnOptionsBackClicked);
 
-        // then attempt to set actual values as we might have 'just loaded in'
+        // then attempt to set actual values as we might have 'just loaded in' to the in-game
         if (!isMainMenu)
         {
-            // CHANGE TEXT ON BUTTON TO 'RESUME' AND CHANGE ON CLICK EVENT
             _optionsBackBtn.GetComponentInChildren<TextMeshProUGUI>().SetText("RESUME");
 
             InitialiseOptions();
@@ -44,11 +42,16 @@ public class OptionsManager : MonoBehaviour
 
     private void InitialiseOptions()
     {
+        // this is called if we have just entered the game level, and we can access 
+        // potential options set by the user on the main menu through 'PlayerPrefs'.
+
         // only load in fps camera if we know we're not in main menu 
         _FPSCamera = GameObject.Find("FPSCamera").GetComponent<FPSCamera>();
         _FPSCamera.SetGain(PlayerPrefs.GetFloat("MouseSensitivity", 1.0f));
 
-        // ADD AUDIO SETTINGS
+        // AUDIO SETTINGS
+        _musicMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 1.0f));
+        _SFXMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
     }
 
     private void OnOptionsBackClicked()
@@ -62,12 +65,10 @@ public class OptionsManager : MonoBehaviour
         PlayerPrefs.SetFloat("MouseSensitivity", value);
         PlayerPrefs.Save();
 
-        // Attempt to find FPSCamera to change it directly if we're in game
         if (!isMainMenu)
         {
             // only load in fps camera if we know we're not in main menu 
             _FPSCamera.SetGain(value);
-            Debug.Log("Set gain to " + value);
         }
 
     }
