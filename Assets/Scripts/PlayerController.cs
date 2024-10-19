@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     
     [SerializeField] private float fieldOfViewAngle = 60; // player's cone of vision
+
+    [Header("DEBUG, Disable all on ship")]
+    private bool _monsterNotInScene;
     
     // Components
     private PlayerInput _inputActions;
@@ -41,13 +44,19 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
-        _monster = FindAnyObjectByType<Monster>();
+        if (_monsterNotInScene)
+        {
+            _monster = FindAnyObjectByType<Monster>();
+        }
         _interactable = null;
     }
 
     private void Update()
     {
-        IsPlayerLookingAtMonster();
+        if (_monsterNotInScene)
+        {
+            IsPlayerLookingAtMonster();
+        }
     }
 
     private void FixedUpdate()
@@ -143,6 +152,15 @@ public class PlayerController : MonoBehaviour
     public void SetCurrentInteractable(GameObject interactable)
     {
         _interactable = interactable;
+    }
+
+    public void EnableInputActions()
+    {
+        _inputActions.Enable();
+    }
+    public void DisableInputActions()
+    {
+        _inputActions.Disable();
     }
 
     private void OnDisable()
