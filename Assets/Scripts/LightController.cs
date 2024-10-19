@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LightController : MonoBehaviour
+public class LightController : MonoBehaviour, ISwitchable
 {
     private Light _flickeringLight;
     private float _timer = 0;
@@ -11,7 +11,7 @@ public class LightController : MonoBehaviour
 
     void Start()
     {
-        _flickeringLight = GetComponent<Light>();
+        _flickeringLight = GetComponentInChildren<Light>();
     }
 
     void Update()
@@ -41,7 +41,6 @@ public class LightController : MonoBehaviour
     public void StopFlicker()
     {
         _isFlickering = false;
-        _flickeringLight.enabled = true; 
     }
     public void TurnOnLight()
     {
@@ -56,5 +55,19 @@ public class LightController : MonoBehaviour
     public void ToggleLight()
     {
         _flickeringLight.enabled = !_flickeringLight.enabled;
+    }
+
+    public void Toggle()
+    {
+        if (_isFlickering)
+        {
+            _isFlickering = false;
+            _flickeringLight.gameObject.SetActive(false);
+        }
+        else
+        {
+            _flickeringLight.gameObject.SetActive(true);
+            _isFlickering = true;
+        }
     }
 }

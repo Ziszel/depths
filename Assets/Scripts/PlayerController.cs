@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Camera _mainCamera;
     private Monster _monster;
+    private GameObject _interactable;
     
     private void Awake()
     {
@@ -41,11 +42,12 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _monster = FindAnyObjectByType<Monster>();
+        _interactable = null;
     }
 
     private void Update()
     {
-        //IsPlayerLookingAtMonster();
+        IsPlayerLookingAtMonster();
     }
 
     private void FixedUpdate()
@@ -59,9 +61,18 @@ public class PlayerController : MonoBehaviour
     // Input events
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
-            Debug.Log("interact with object");
+            // Safety check against null
+            if (_interactable == null)
+            {
+                return;
+            }
+            
+            if(_interactable.TryGetComponent(out IInteractable interactable))
+            {
+                interactable.AttemptToInteract();
+            }
         }
     }
 
@@ -126,6 +137,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetCurrentInteractable(GameObject interactable)
+    {
+        _interactable = interactable;
     }
 
     private void OnDisable()
