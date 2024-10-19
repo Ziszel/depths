@@ -55,9 +55,6 @@ public class OptionsManager : MonoBehaviour
     {
         Debug.Log("OPTIONS MENU BUTTON CLICKED");
         GameManager.instance.ShowMainMenuCanvas();
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void OnMouseSensitivityChanged(float value)
