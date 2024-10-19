@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -53,6 +54,15 @@ public class PlayerController : MonoBehaviour
         MoveAndRotate();
 
         _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+    }
+    
+    // Input events
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("hello");   
+        }
     }
 
     private void SetMovementValues()
