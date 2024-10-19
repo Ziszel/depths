@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        IsPlayerLookingAtMonster();
+        //IsPlayerLookingAtMonster();
     }
 
     private void FixedUpdate()
@@ -61,7 +61,15 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("hello");   
+            Debug.Log("interact with object");
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("pause the game");
         }
     }
 
@@ -106,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
         if ((Vector3.Angle(directionOfRay, transform.forward)) < fieldOfViewAngle / 2)
         {
-            Debug.DrawRay(transform.position, directionOfRay * 100, Color.green);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
                 if (hit.collider.CompareTag("Monster"))
