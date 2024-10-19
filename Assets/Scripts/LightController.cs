@@ -1,4 +1,5 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LightController : MonoBehaviour, ISwitchable
 {
@@ -44,7 +45,7 @@ public class LightController : MonoBehaviour, ISwitchable
     }
     public void TurnOnLight()
     {
-        _flickeringLight.enabled = true;
+        _flickeringLight.gameObject.SetActive(true);
     }
 
     public void TurnOffLight()

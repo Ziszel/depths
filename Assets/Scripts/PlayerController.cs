@@ -154,6 +154,15 @@ public class PlayerController : MonoBehaviour
         _interactable = interactable;
     }
 
+    public void EnableInputActions()
+    {
+        _inputActions.Enable();
+    }
+    public void DisableInputActions()
+    {
+        _inputActions.Disable();
+    }
+
     private void OnDisable()
     {
         _inputActions.Player.Disable();
