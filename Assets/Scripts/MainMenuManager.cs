@@ -3,14 +3,26 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private Button _startGame;
-    private Button _options;
+    private GameObject _mainMenuCanvas; 
+
+    // Main menu buttons
+    private Button _startGameBtn;
+    private Button _optionsBtn;
+
+    // Options menu buttons
+    private Button _optionsBackBtn;
 
     private void Awake()
     {
         SetButtonReferences();
-        _startGame.onClick.AddListener(OnStartGameClicked);
-        _options.onClick.AddListener(OnOptionsClicked);
+        _startGameBtn.onClick.AddListener(OnStartGameClicked);
+        _optionsBtn.onClick.AddListener(OnOptionsClicked);
+        _optionsBackBtn.onClick.AddListener(OnOptionsBackClicked);
+    }
+
+    private void Start()
+    {
+        _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
     }
 
     private void OnStartGameClicked()
@@ -20,9 +32,13 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnOptionsClicked()
     {
-        GameManager.instance.ShowOptions();
+        GameManager.instance.ShowOptionsCanvas(true, _mainMenuCanvas);
     }
-    
+    private void OnOptionsBackClicked()
+    {
+        GameManager.instance.ShowMainMenuCanvas(_mainMenuCanvas);
+    }
+
     private void SetButtonReferences()
     {
         Button[] buttons = GetComponentsInChildren<Button>();
@@ -30,13 +46,18 @@ public class MainMenuManager : MonoBehaviour
         {
             if (b.gameObject.name == "StartGameBtn")
             {
-                _startGame = b;
+                _startGameBtn = b;
                 continue;
             }
 
             if (b.gameObject.name == "OptionsBtn")
             {
-                _options = b;
+                _optionsBtn = b;
+            }
+
+            if (b.gameObject.name == "BackBtn")
+            {
+                _optionsBackBtn = b;
             }
         }
     }
