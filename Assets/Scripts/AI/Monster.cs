@@ -38,10 +38,10 @@ public class Monster : MonoBehaviour
     private bool CanMonsterSeePlayer()
     {
         // Check if player is very close to monster
-        /*if (Vector3.Distance(_player.transform.position, transform.position) < 5)
+        if (Vector3.Distance(_player.transform.position, transform.position) < 5)
         {
             return true;
-        }*/
+        }
 
         // Check if the player is looking at the monster
         if (!_isPlayerLookingAtMe)

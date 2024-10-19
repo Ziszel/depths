@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Camera _mainCamera;
     private Monster _monster;
+    private GameObject _interactable;
     
     private void Awake()
     {
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _monster = FindAnyObjectByType<Monster>();
+        _interactable = null;
     }
 
     private void Update()
@@ -53,6 +56,33 @@ public class PlayerController : MonoBehaviour
         MoveAndRotate();
 
         _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+    }
+    
+    // Input events
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            // Safety check against null
+            if (_interactable == null)
+            {
+                Debug.Log("No object currently interactable");
+                return;
+            }
+            
+            if(_interactable.TryGetComponent(out IInteractable interactable))
+            {
+                interactable.AttemptToInteract();
+            }
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("pause the game");
+        }
     }
 
     private void SetMovementValues()
@@ -96,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         if ((Vector3.Angle(directionOfRay, transform.forward)) < fieldOfViewAngle / 2)
         {
-            Debug.DrawRay(transform.position, directionOfRay * 100, Color.green);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
                 if (hit.collider.CompareTag("Monster"))
@@ -109,6 +138,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetCurrentInteractable(GameObject interactable)
+    {
+        _interactable = interactable;
     }
 
     private void OnDisable()
