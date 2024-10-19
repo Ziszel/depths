@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+        _optionsMenuCanvas.SetActive(false);
     }
 
     public void LoadLevel(string levelName)
