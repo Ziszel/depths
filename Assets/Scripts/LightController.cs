@@ -1,4 +1,5 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LightController : MonoBehaviour, ISwitchable
 {
@@ -19,7 +20,7 @@ public class LightController : MonoBehaviour, ISwitchable
         if (_isFlickering) 
         { 
             // Check if -1 was input for random flickering, if not, use custom flicker interval input
-            if (_customFlickerInterval == -1) { HandleFlicker(Random.Range(0.05f, 2.0f)); Debug.Log("RANDOMLY FLICKERING!");  }
+            if (_customFlickerInterval == -1) { HandleFlicker(Random.Range(0.05f, 2.0f));  }
             else { HandleFlicker(_customFlickerInterval); }
         }
     }
