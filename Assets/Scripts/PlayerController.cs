@@ -91,6 +91,10 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             Debug.Log("pause the game");
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameManager.instance.ShowOptionsCanvas(true);
         }
     }
 
