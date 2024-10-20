@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     private GameObject _optionsMenuCanvas; 
     private GameObject _creditsCanvas;
 
+    private GameObject _mainMenuBtn; 
+    private GameObject _resumeBtn;
+
     public void Awake()
     {
         if (instance != null)
@@ -22,29 +26,55 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
-        _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        _creditsCanvas = GameObject.Find("CreditsCanvas");
-        _optionsMenuCanvas.SetActive(false);
-        _creditsCanvas.SetActive(false);
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
+        _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
     }
 
     public void LoadLevel(string levelName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
+        _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
         _optionsMenuCanvas.SetActive(false);
+
+        if (scene.name == "MainMenu")
+        {
+            _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
+            _mainMenuCanvas.SetActive(true);
+            _creditsCanvas = GameObject.Find("CreditsCanvas");
+            _creditsCanvas.SetActive(false);
+
+            // Adjust button layout of options menu
+            RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector3(0, -61, 0);
+            _resumeBtn.SetActive(false);
+        }
+        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting") // leaving my level here for future testing
+        {
+            // Ensure game is unpaused upon entering game levels
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            // Adjust button layout of options menu
+            RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector3(110, -61, 0);
+            _resumeBtn.SetActive(true);
+        }
     }
 
     // Ideally, we don't want mainmenu canvas to be a parameter here, as we want this to be able to be called from in-game
     public void ShowOptionsCanvas(bool isFromMainMenu)
     {
-        // Show options menu overlay (should work on MainMenu and in game)
-        Debug.Log("ShowOptionsCanvas() called");
-
         if (_optionsMenuCanvas)
         {
             _optionsMenuCanvas.SetActive(true);
@@ -64,23 +94,29 @@ public class GameManager : MonoBehaviour
     }
 
     // Maybe rename this function - backto main menu from options or something
-    public void ShowMainMenuCanvas()
+    public void ShowMainMenu()
     {
         if (_mainMenuCanvas)
         {
+            // we know we are in the MainMenu level so we just need to activate the canvas
             _mainMenuCanvas.SetActive(true);
         }
         else
         {
-            // This must mean we are in-game if the main menu canvas does not exist..
-            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the main menu canvas object so we must be in-game");
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // This must mean we are in-game if the main menu canvas does not exist so we want to fully return to the main menu level
+            LoadLevel("MainMenu");
         }
         if (_optionsMenuCanvas)
         {
             _optionsMenuCanvas.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the options menu canvas object");
+        }
+        if (_creditsCanvas)
+        {
+            _creditsCanvas.SetActive(false);
         }
         else
         {
@@ -110,6 +146,22 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager ShowOptionsCanvas(): Could not find the main menu canvas object");
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        ShowOptionsCanvas(true);
+    }
+
+    public void Unpause()
+    {
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _optionsMenuCanvas.SetActive(false);
     }
 
     public void SetBestTime(float newBestTime)
