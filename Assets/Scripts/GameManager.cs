@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -29,13 +30,29 @@ public class GameManager : MonoBehaviour
         _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
         _creditsCanvas = GameObject.Find("CreditsCanvas");
-        _optionsMenuCanvas.SetActive(false);
+        //_optionsMenuCanvas.SetActive(false);
         if (_creditsCanvas) { _creditsCanvas.SetActive(false); }
     }
 
     public void LoadLevel(string levelName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
+        //_optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // reassign options menu 
+        //_optionsMenuCanvas.SetActive(false);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "KaliTest2_OptionsTesting" || scene.name == "MainLevel") // DELETE KALITEST2 SCENE ONCE HOOKED UP TO MAIN LEVEL
+        {
+            // Update the reference to the in-game options menu
+            _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
+        }
+        else if (scene.name == "MainMenu")
+        {
+            // Update the reference to the main menu options menu
+            _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
+        }
         _optionsMenuCanvas.SetActive(false);
     }
 
