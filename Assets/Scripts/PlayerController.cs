@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     
     [SerializeField] private float fieldOfViewAngle = 60; // player's cone of vision
+    [SerializeField] private GameObject head;
+    [SerializeField] private GameObject crouch;
 
     [Header("DEBUG, Disable all on ship")]
     private bool _monsterNotInScene;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     private Rigidbody _rb;
     private Camera _mainCamera;
+    private CinemachineCamera _cinemachineCamera;
     private Monster _monster;
     private GameObject _interactable;
     private FloorCollider _floorCollider;
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main;
         _monster = FindAnyObjectByType<Monster>();
         _floorCollider = GetComponentInChildren<FloorCollider>();
+        _cinemachineCamera = FindAnyObjectByType<CinemachineCamera>(); 
         _interactable = null;
         
         // Hook up events
@@ -118,17 +123,23 @@ public class PlayerController : MonoBehaviour
         // Check if crouching
         if (Mathf.Approximately(_inputActions.Player.Crouch.ReadValue<float>(), 1.0f))
         {
-            movementVelocity = crouchVelocity;
-            maxMovementVelocity = maxCrouchVelocity;
+            if (_floorCollider.IsOnGround())
+            {
+                _cinemachineCamera.Target.TrackingTarget = crouch.transform;
+                movementVelocity = crouchVelocity;
+                maxMovementVelocity = maxCrouchVelocity;
+            }
         }
         // Check if sprinting
         else if (Mathf.Approximately(_inputActions.Player.Sprint.ReadValue<float>(), 1.0f))
         {
+            _cinemachineCamera.Target.TrackingTarget = head.transform;
             maxMovementVelocity = maxSprintVelocity;
         }
         // We are walking
         else
         {
+            _cinemachineCamera.Target.TrackingTarget = head.transform;
             movementVelocity = walkVelocity;
             maxMovementVelocity = maxWalkVelocity;
         }

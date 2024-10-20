@@ -1,9 +1,15 @@
+using System;
 using UnityEngine;
 
 public class FloorCollider : MonoBehaviour
 {
     public PlayerController player;
-    private bool _onGround = false;
+    private bool _onGround;
+
+    private void Start()
+    {
+        _onGround = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
