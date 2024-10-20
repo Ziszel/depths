@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
         ShowOptionsCanvas(true);
     }
 
-    public void Resume()
+    public void Unpause()
     {
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;

@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
             // Unpause the game if we are paused
             else
             {
-                GameManager.instance.Resume();
+                GameManager.instance.Unpause();
             }
             
         }

@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 public class OptionsManager : MonoBehaviour
 {
     private Button _optionsMainMenuBtn;
+    private Button _optionsResumeBtn;
 
     public Slider _mouseSensitivitySlider;
     public Slider _musicVolumeSlider;
@@ -30,6 +31,9 @@ public class OptionsManager : MonoBehaviour
 
         _optionsMainMenuBtn = transform.Find("MainMenuBtn").GetComponent<Button>();
         _optionsMainMenuBtn.onClick.AddListener(OnOptionsMainMenuClicked);
+
+        _optionsResumeBtn = transform.Find("ResumeBtn").GetComponent<Button>();
+        _optionsResumeBtn.onClick.AddListener(OnOptionsResumeClicked);
 
         // then attempt to set actual values as we might have 'just loaded in' to the in-game
         if (!isMainMenu)
@@ -59,6 +63,11 @@ public class OptionsManager : MonoBehaviour
     {
         Debug.Log("OPTIONS MENU MAINMENU BUTTON CLICKED");
         GameManager.instance.ShowMainMenu();
+    }
+    private void OnOptionsResumeClicked()
+    {
+        Debug.Log("OPTIONS MENU RESUME BUTTON CLICKED");
+        GameManager.instance.Unpause();
     }
 
     private void OnMouseSensitivityChanged(float value)
