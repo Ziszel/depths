@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 29f7c65a2f9f353b4ac709bb74af3325
+  - enabled: 1
+    path: Assets/Scenes/KaliTest2_OptionsTesting.unity
+    guid: cd7cc520d03ed4c4a8fa7b3aca9599e3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 9559f48a82bea84d2a6de18f19dbe57f, type: 3}
   m_UseUCBPForAssetBundles: 0

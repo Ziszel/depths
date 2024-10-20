@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     private Button _startGameBtn;
-    private Button _optionsBtn; 
+    private Button _optionsBtn;
     private Button _creditsBtn;
 
     private void Awake()
@@ -13,11 +13,12 @@ public class MainMenuManager : MonoBehaviour
         _startGameBtn.onClick.AddListener(OnStartGameClicked);
         _optionsBtn.onClick.AddListener(OnOptionsClicked);
         _creditsBtn.onClick.AddListener(OnCreditsClicked);
+
     }
 
     private void OnStartGameClicked()
     {
-        GameManager.instance.LoadLevel("MainLevel");
+        GameManager.instance.LoadLevel("MainLevel"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
     }
 
     private void OnOptionsClicked()
@@ -28,7 +29,11 @@ public class MainMenuManager : MonoBehaviour
     {
         GameManager.instance.ShowCreditsCanvas();
     }
-
+    private void OnCreditsToMainMenuClicked()
+    {
+        Debug.Log("OPTIONS MENU MAINMENU BUTTON CLICKED");
+        GameManager.instance.ShowMainMenu();
+    }
 
     private void SetButtonReferences()
     {
