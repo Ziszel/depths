@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Camera _mainCamera;
     private Monster _monster;
     private GameObject _interactable;
+    private FloorCollider _floorCollider;
     
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _monster = FindAnyObjectByType<Monster>();
+        _floorCollider = GetComponentInChildren<FloorCollider>();
         _interactable = null;
         
         // Hook up events
@@ -127,11 +129,14 @@ public class PlayerController : MonoBehaviour
 
     private void MoveAndRotate()
     {
-        // Move the player relative to the camera's rotation and clamp the movement velocity
-        Vector3 move = cameraTransform.forward * _moveInput.y + cameraTransform.right * _moveInput.x;
-        _moveInput = _inputActions.Player.Move.ReadValue<Vector2>();
-        move.y = 0.0f;
-        _rb.AddForce(move.normalized * movementVelocity, ForceMode.VelocityChange);
+        if (_floorCollider.IsOnGround())
+        {
+            // Move the player relative to the camera's rotation and clamp the movement velocity
+            Vector3 move = cameraTransform.forward * _moveInput.y + cameraTransform.right * _moveInput.x;
+            _moveInput = _inputActions.Player.Move.ReadValue<Vector2>();
+            move.y = 0.0f;
+            _rb.AddForce(move.normalized * movementVelocity, ForceMode.VelocityChange);
+        }
         
         // Rotate the player to face the direction the camera is looking at
         transform.rotation =  Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
@@ -156,6 +161,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Rigidbody GetRigidBody()
+    {
+        return _rb;
     }
 
     public void SetCurrentInteractable(GameObject interactable)
