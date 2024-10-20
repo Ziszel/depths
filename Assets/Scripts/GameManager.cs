@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     private GameObject _optionsMenuCanvas; 
     private GameObject _creditsCanvas;
 
+    private GameObject _mainMenuBtn; 
+    private GameObject _resumeBtn;
+
     public void Awake()
     {
         if (instance != null)
@@ -22,24 +26,33 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+        //_optionsMenuCanvas.SetActive(false);
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
+        _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
     }
 
     private void Start()
     {
-
+        //_optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+        //_optionsMenuCanvas.SetActive(false);
+        //_mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
+       // _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
     }
 
     public void LoadLevel(string levelName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
-        //_optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // reassign options menu 
-        //_optionsMenuCanvas.SetActive(false);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
+        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
+        _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
         _optionsMenuCanvas.SetActive(false);
 
         if (scene.name == "MainMenu")
@@ -48,6 +61,11 @@ public class GameManager : MonoBehaviour
             _mainMenuCanvas.SetActive(true);
             _creditsCanvas = GameObject.Find("CreditsCanvas");
             _creditsCanvas.SetActive(false);
+
+            // Adjust button layout of options menu
+            RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector3(0, -61, 0);
+            _resumeBtn.SetActive(false);
         }
         if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting")
         {
@@ -55,6 +73,11 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            // Adjust button layout of options menu
+            RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector3(110, -61, 0);
+            _resumeBtn.SetActive(true);
         }
     }
 
@@ -124,6 +147,22 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager ShowOptionsCanvas(): Could not find the main menu canvas object");
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        ShowOptionsCanvas(true);
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _optionsMenuCanvas.SetActive(false);
     }
 
     public void SetBestTime(float newBestTime)
