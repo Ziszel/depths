@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
         _creditsCanvas = GameObject.Find("CreditsCanvas");
         _optionsMenuCanvas.SetActive(false);
-        _creditsCanvas.SetActive(false);
+        if (_creditsCanvas) { _creditsCanvas.SetActive(false); }
     }
 
     public void LoadLevel(string levelName)
