@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Event delegates
     public Action<bool> OnPlayerLookingAtMonster;
+    public Action OnPlayerDeath;
     
     [Header("Movement velocity")]
     [SerializeField] private float movementVelocity = 5.0f;
@@ -44,19 +45,16 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
-        if (_monsterNotInScene)
-        {
-            _monster = FindAnyObjectByType<Monster>();
-        }
+        _monster = FindAnyObjectByType<Monster>();
         _interactable = null;
+        
+        // Hook up events
+        _monster.OnPlayerWithinKillDistance += OnKillPlayer;
     }
 
     private void Update()
     {
-        if (_monsterNotInScene)
-        {
-            IsPlayerLookingAtMonster();
-        }
+        IsPlayerLookingAtMonster();
     }
 
     private void FixedUpdate()
@@ -91,7 +89,18 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             Debug.Log("pause the game");
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameManager.instance.ShowOptionsCanvas(true);
         }
+    }
+
+    public void OnKillPlayer()
+    {
+        DisableInputActions();
+        _rb.constraints = RigidbodyConstraints.None;
+        OnPlayerDeath?.Invoke();
     }
 
     private void SetMovementValues()
@@ -166,5 +175,6 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         _inputActions.Player.Disable();
+        _monster.OnPlayerWithinKillDistance -= OnKillPlayer;
     }
 }

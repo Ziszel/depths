@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Monster : MonoBehaviour
 {
+    public Action OnPlayerWithinKillDistance;
+    
     public enum MonsterState
     {
         None, // no state, do nothing
@@ -16,6 +20,7 @@ public class Monster : MonoBehaviour
     private NavMeshAgent _agent;
     private bool _isPlayerLookingAtMe;
     private MonsterState _monsterState;
+    private LevelManager _levelManager;
     
     // path node logic
     private int _currentNodeIndicator;
@@ -26,11 +31,14 @@ public class Monster : MonoBehaviour
     // Chase helpers
     [SerializeField] private float minimumChaseTime = 2.0f;
     private float _currentChaseTime;
+
+    [SerializeField] private float _killRange;
     
     private void Start()
     {
         _monsterState = MonsterState.None;
         _isPlayerLookingAtMe = false;
+        _levelManager = FindAnyObjectByType<LevelManager>();
         _agent = GetComponent<NavMeshAgent>();
         _player = FindAnyObjectByType<PlayerController>();
         _currentChaseTime = 0.0f;
@@ -41,16 +49,25 @@ public class Monster : MonoBehaviour
     
     private void Update()
     {
+        // Regardless of state, if the player walks up to the monster, they die
+        if (!_levelManager.IsPlayerDead())
+        {
+            if (Vector3.Distance(transform.position, _player.transform.position) < _killRange)
+            {
+                OnPlayerWithinKillDistance?.Invoke();
+            }
+        }
+        
         switch (_monsterState)
         {
             case MonsterState.None:
-                // Do nothing, this is intentional
+                _agent.destination = transform.position;
                 break;
             case MonsterState.ChasePath:
                 if (CanMonsterSeePlayer())
                 {
                     _agent.destination = _player.transform.position;
-                    SetMonsterState(MonsterState.Chase);
+                    SetMonsterState(MonsterState.Chase, _pathNodes, transform.position);
                 }
                 else
                 {
@@ -70,7 +87,7 @@ public class Monster : MonoBehaviour
                     else
                     {
                         // We can safely set the same _pathNodes as before
-                        SetMonsterState(MonsterState.ChasePath, _pathNodes);
+                        SetMonsterState(MonsterState.ChasePath, _pathNodes, transform.position);
                     }
                 }
                 _agent.destination = _player.transform.position;
@@ -85,7 +102,6 @@ public class Monster : MonoBehaviour
                     if ((_currentNodeIndicator + 1) > _pathNodes.Count - 1)
                     {
                         SetMonsterState(MonsterState.None);
-                        transform.position = new Vector3(0.0f, -100.0f, 0.0f);
                     }
                     else
                     {
@@ -148,14 +164,17 @@ public class Monster : MonoBehaviour
         _player.OnPlayerLookingAtMonster -= SetIsPlayerLooking;
     }
 
+    // Only used for when monster state is setup to none
     public void SetMonsterState(MonsterState monsterState)
     {
         _monsterState = monsterState;
+        transform.position = new Vector3(0.0f, -100.0f, 0.0f);
         _currentNodeIndicator = 0;
     }
 
-    public void SetMonsterState(MonsterState monsterState, List<Vector3> newPathNodes)
+    public void SetMonsterState(MonsterState monsterState, List<Vector3> newPathNodes, Vector3 newPosition)
     {
+        transform.position = newPosition;
         _monsterState = monsterState;
         _currentNodeIndicator = 0;
         _pathNodes = newPathNodes;
