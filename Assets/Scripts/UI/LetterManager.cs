@@ -3,14 +3,19 @@ using UnityEngine.UI;
 
 public class LetterManager : MonoBehaviour
 {
-    private Button _letterExitBtn;
-    private Button _letterContinueBtn;
-    void Awake()
+    public Button _letterExitBtn;
+    public Button _letterContinueBtn;
+
+    void Start()
     {
-        _letterExitBtn = transform.Find("LetterExitBtn").GetComponent<Button>();
+        //_letterExitBtn = transform.Find("LetterExitBtn").GetComponent<Button>();
+        /*if (!_letterExitBtn)
+        {
+            Debug.LogError("Button component not found on LetterExitBtn!");
+        }*/
         _letterExitBtn.onClick.AddListener(OnLetterExitClicked);
 
-        _letterContinueBtn = transform.Find("LetterContinueBtn").GetComponent<Button>();
+        //_letterContinueBtn = transform.Find("LetterContinueBtn").GetComponent<Button>();
         _letterContinueBtn.onClick.AddListener(OnLetterContinueClicked);
     }
 
@@ -22,5 +27,6 @@ public class LetterManager : MonoBehaviour
     private void OnLetterContinueClicked()
     {
         // call game manager to deactivate this 
+        GameManager.instance.LetterContinue();
     }
 }

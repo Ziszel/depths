@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Splines;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private GameObject _mainMenuCanvas;
     private GameObject _optionsMenuCanvas; 
     private GameObject _creditsCanvas;
+    private GameObject _letterCanvas;
 
     private GameObject _mainMenuBtn; 
     private GameObject _resumeBtn;
@@ -53,19 +54,24 @@ public class GameManager : MonoBehaviour
             _creditsCanvas = GameObject.Find("CreditsCanvas");
             _creditsCanvas.SetActive(false);
 
-            // Adjust button layout of options menu
+            // Adjust button layout of options menu fro main menu
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
         }
-        if (scene.name == "MainLevel" || scene.name == "KaliTest2") // leaving my level here for future testing
+        if (scene.name == "MainLevel" || scene.name == "KaliTest") // leaving my level here for future testing
         {
+            // Show letter and enable mouse controls
+            _letterCanvas = GameObject.Find("LetterCanvas");
+            _letterCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+
             // Ensure game is unpaused upon entering game levels
             Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
 
-            // Adjust button layout of options menu
+            // Adjust button layout of options menu for game level
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector3(110, -61, 0);
             _resumeBtn.SetActive(true);
@@ -146,6 +152,15 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager ShowOptionsCanvas(): Could not find the main menu canvas object");
         }
+    }
+
+    public void LetterContinue()
+    {
+        _letterCanvas.SetActive(false);
+
+        // Deactivate the cursor when beginning the game after reading the letter
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void Pause()
