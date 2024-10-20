@@ -27,11 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
-        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        _creditsCanvas = GameObject.Find("CreditsCanvas");
-        //_optionsMenuCanvas.SetActive(false);
-        if (_creditsCanvas) { _creditsCanvas.SetActive(false); }
+
     }
 
     public void LoadLevel(string levelName)
@@ -43,25 +39,28 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "KaliTest2_OptionsTesting" || scene.name == "MainLevel") // DELETE KALITEST2 SCENE ONCE HOOKED UP TO MAIN LEVEL
-        {
-            // Update the reference to the in-game options menu
-            _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
-        }
-        else if (scene.name == "MainMenu")
-        {
-            // Update the reference to the main menu options menu
-            _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
-        }
+        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas"); // Replace with the correct object name
         _optionsMenuCanvas.SetActive(false);
+
+        if (scene.name == "MainMenu")
+        {
+            _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
+            _mainMenuCanvas.SetActive(true);
+            _creditsCanvas = GameObject.Find("CreditsCanvas");
+            _creditsCanvas.SetActive(false);
+        }
+        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting")
+        {
+            // Ensure game is unpaused upon entering game levels
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     // Ideally, we don't want mainmenu canvas to be a parameter here, as we want this to be able to be called from in-game
     public void ShowOptionsCanvas(bool isFromMainMenu)
     {
-        // Show options menu overlay (should work on MainMenu and in game)
-        Debug.Log("ShowOptionsCanvas() called");
-
         if (_optionsMenuCanvas)
         {
             _optionsMenuCanvas.SetActive(true);
@@ -81,19 +80,17 @@ public class GameManager : MonoBehaviour
     }
 
     // Maybe rename this function - backto main menu from options or something
-    public void ShowMainMenuCanvas()
+    public void ShowMainMenu()
     {
         if (_mainMenuCanvas)
         {
+            // we know we are in the MainMenu level so we just need to activate the canvas
             _mainMenuCanvas.SetActive(true);
         }
         else
         {
-            // This must mean we are in-game if the main menu canvas does not exist..
-            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the main menu canvas object so we must be in-game");
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // This must mean we are in-game if the main menu canvas does not exist so we want to fully return to the main menu level
+            LoadLevel("MainMenu");
         }
         if (_optionsMenuCanvas)
         {
