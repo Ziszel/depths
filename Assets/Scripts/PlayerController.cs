@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,17 +22,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     
     [SerializeField] private float fieldOfViewAngle = 60; // player's cone of vision
+    [Header("Camera targets")]
+    [SerializeField] private GameObject head;
+    [SerializeField] private GameObject crouch;
 
-    [Header("DEBUG, Disable all on ship")]
-    private bool _monsterNotInScene;
+    [Header("Footstep play rates")] 
+    [SerializeField] private float walkingRate = 1.0f;
+    [SerializeField] private float sprintingRate = 0.5f;
+
+    private float _timeUntilFootstep;
+    private float _currentFootstepRate;
+    private bool _isPlayerWalking;
     
     // Components
     private PlayerInput _inputActions;
     private Vector2 _moveInput;
     private Rigidbody _rb;
     private Camera _mainCamera;
+    private CinemachineCamera _cinemachineCamera;
     private Monster _monster;
     private GameObject _interactable;
+    private FloorCollider _floorCollider;
+    private PlayerAudio _playerAudio;
     
     private void Awake()
     {
@@ -46,7 +58,12 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         _monster = FindAnyObjectByType<Monster>();
+        _floorCollider = GetComponentInChildren<FloorCollider>();
+        _playerAudio = GetComponentInChildren<PlayerAudio>();
+        _cinemachineCamera = FindAnyObjectByType<CinemachineCamera>(); 
         _interactable = null;
+        _timeUntilFootstep = 0.0f; // stops it playing immediately or causing error
+        _isPlayerWalking = false;
         
         // Hook up events
         _monster.OnPlayerWithinKillDistance += OnKillPlayer;
@@ -55,6 +72,26 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         IsPlayerLookingAtMonster();
+        
+        // Handle timers
+        if (_isPlayerWalking)
+        {
+            _timeUntilFootstep -= Time.deltaTime;
+            if (_timeUntilFootstep < 0.0f)
+            {
+                _playerAudio.PlaySfx();
+                _timeUntilFootstep = _currentFootstepRate;
+            }
+        }
+        else
+        {
+            _timeUntilFootstep = _currentFootstepRate;
+        }
+
+        if (_inputActions.Player.Move.WasPerformedThisFrame())
+        {
+            _playerAudio.PlaySfx();
+        }
     }
 
     private void FixedUpdate()
@@ -116,29 +153,49 @@ public class PlayerController : MonoBehaviour
         // Check if crouching
         if (Mathf.Approximately(_inputActions.Player.Crouch.ReadValue<float>(), 1.0f))
         {
-            movementVelocity = crouchVelocity;
-            maxMovementVelocity = maxCrouchVelocity;
+            if (_floorCollider.IsOnGround())
+            {
+                _cinemachineCamera.Target.TrackingTarget = crouch.transform;
+                movementVelocity = crouchVelocity;
+                maxMovementVelocity = maxCrouchVelocity;
+            }
         }
         // Check if sprinting
         else if (Mathf.Approximately(_inputActions.Player.Sprint.ReadValue<float>(), 1.0f))
         {
+            _cinemachineCamera.Target.TrackingTarget = head.transform;
             maxMovementVelocity = maxSprintVelocity;
+            _currentFootstepRate = sprintingRate;
         }
         // We are walking
         else
         {
+            _cinemachineCamera.Target.TrackingTarget = head.transform;
             movementVelocity = walkVelocity;
             maxMovementVelocity = maxWalkVelocity;
+            _currentFootstepRate = walkingRate;
         }
     }
 
     private void MoveAndRotate()
     {
-        // Move the player relative to the camera's rotation and clamp the movement velocity
-        Vector3 move = cameraTransform.forward * _moveInput.y + cameraTransform.right * _moveInput.x;
-        _moveInput = _inputActions.Player.Move.ReadValue<Vector2>();
-        move.y = 0.0f;
-        _rb.AddForce(move.normalized * movementVelocity, ForceMode.VelocityChange);
+        if (_floorCollider.IsOnGround())
+        {
+            // Move the player relative to the camera's rotation and clamp the movement velocity
+            Vector3 move = cameraTransform.forward * _moveInput.y + cameraTransform.right * _moveInput.x;
+            _moveInput = _inputActions.Player.Move.ReadValue<Vector2>();
+            move.y = 0.0f;
+            _rb.AddForce(move.normalized * movementVelocity, ForceMode.VelocityChange);
+
+            if (move.x == 0.0f && move.y == 0.0f)
+            {
+                _isPlayerWalking = false;
+            }
+            else
+            {
+                _isPlayerWalking = true;
+            }
+        }
         
         // Rotate the player to face the direction the camera is looking at
         transform.rotation =  Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
@@ -163,6 +220,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Rigidbody GetRigidBody()
+    {
+        return _rb;
     }
 
     public void SetCurrentInteractable(GameObject interactable)
