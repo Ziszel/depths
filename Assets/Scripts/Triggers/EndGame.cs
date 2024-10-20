@@ -6,7 +6,7 @@ public class EndGame : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.SetBestTime(SceneManager.GetTimer());
+            GameManager.instance.SetBestTime(LevelManager.GetTimer());
             GameManager.instance.LoadLevel("MainMenu");
         }
     }
