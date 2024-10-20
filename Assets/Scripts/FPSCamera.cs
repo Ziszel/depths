@@ -18,7 +18,10 @@ public class FPSCamera : MonoBehaviour
                 if (c.Name == "Look X (Pan)")
                 {
                     c.Input.Gain = gain;
-                    break;
+                }
+                if (c.Name == "Look Y (Tilt)")
+                {
+                    c.Input.Gain = gain * -1;
                 }
             }
         }
