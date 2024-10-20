@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
         }
-        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting") // leaving my level here for future testing
+        if (scene.name == "MainLevel" || scene.name == "KaliTest2") // leaving my level here for future testing
         {
             // Ensure game is unpaused upon entering game levels
             Time.timeScale = 1f;
