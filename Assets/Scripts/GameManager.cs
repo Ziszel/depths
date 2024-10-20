@@ -30,17 +30,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        //_optionsMenuCanvas.SetActive(false);
-        _mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
         _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
-    }
-
-    private void Start()
-    {
-        //_optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        //_optionsMenuCanvas.SetActive(false);
-        //_mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
-       // _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
     }
 
     public void LoadLevel(string levelName)
@@ -51,7 +42,7 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        _mainMenuBtn = _optionsMenuCanvas.transform.Find("MainMenuBtn").gameObject;
+        _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
         _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
         _optionsMenuCanvas.SetActive(false);
 
@@ -67,7 +58,7 @@ public class GameManager : MonoBehaviour
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
         }
-        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting")
+        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting") // leaving my level here for future testing
         {
             // Ensure game is unpaused upon entering game levels
             Time.timeScale = 1f;
@@ -118,6 +109,14 @@ public class GameManager : MonoBehaviour
         if (_optionsMenuCanvas)
         {
             _optionsMenuCanvas.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("GameManager ShowMainMenuCanvas(): Could not find the options menu canvas object");
+        }
+        if (_creditsCanvas)
+        {
+            _creditsCanvas.SetActive(false);
         }
         else
         {
