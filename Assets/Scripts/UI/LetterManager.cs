@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class LetterManager : MonoBehaviour
 {
+    // edit
     public Button _letterExitBtn;
     public Button _letterContinueBtn;
 

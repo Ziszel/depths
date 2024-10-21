@@ -38,7 +38,7 @@ public class BlackFadeTransition : MonoBehaviour
         {
             elapsedTime += Time.unscaledDeltaTime;
             SetBackgroundTransparency(Mathf.Clamp01(elapsedTime / transitionDuration));
-            Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
+            //Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
             yield return null;
         }
 
@@ -56,7 +56,7 @@ public class BlackFadeTransition : MonoBehaviour
         {
             elapsedTime += Time.unscaledDeltaTime;
             SetBackgroundTransparency(Mathf.Clamp01(1 - (elapsedTime / transitionDuration)));
-            Debug.Log("FadeFromBlack called. elapsed time: " + elapsedTime);
+            //Debug.Log("FadeFromBlack called. elapsed time: " + elapsedTime);
             yield return null;
         }
 
@@ -74,7 +74,7 @@ public class BlackFadeTransition : MonoBehaviour
         {
             elapsedTime += Time.unscaledDeltaTime;
             SetBackgroundTransparency(Mathf.Clamp01(elapsedTime / transitionDuration));
-            Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
+            //Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
             yield return null;
         }
 

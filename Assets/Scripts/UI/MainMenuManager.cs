@@ -7,6 +7,7 @@ public class MainMenuManager : MonoBehaviour
     private Button _optionsBtn;
     private Button _creditsBtn;
 
+    // edit
     private void Awake()
     {
         SetButtonReferences();
@@ -18,7 +19,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartGameClicked()
     {
-        GameManager.instance.LoadLevel("KaliTest"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
+        GameManager.instance.LoadLevel("ElevatorTest"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
     }
 
     private void OnOptionsClicked()

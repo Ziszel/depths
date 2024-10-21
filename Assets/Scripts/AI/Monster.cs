@@ -119,6 +119,7 @@ public class Monster : MonoBehaviour
                         _agent.destination = _pathNodes[_currentNodeIndicator];
                     }
                 }
+                Debug.Log("Time should not be decreasing");
                 _timeUntilScreech -= Time.deltaTime;
                 break;
         }

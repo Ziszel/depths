@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CreditsManager : MonoBehaviour
 {
-
+    // edit
     private Button _creditsMainMenuBtn;
 
     void Awake()

@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevel.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CalinTest.unity
     guid: b4c9e371c7e9b3559b92d891e5cedb06
   - enabled: 1
@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KaliTest.unity
     guid: cd7cc520d03ed4c4a8fa7b3aca9599e3
+  - enabled: 1
+    path: Assets/Scenes/ElevatorTest.unity
+    guid: 379969b2cf49271518fb1f18bf0992be
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 9559f48a82bea84d2a6de18f19dbe57f, type: 3}
   m_UseUCBPForAssetBundles: 0

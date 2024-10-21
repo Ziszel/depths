@@ -65,7 +65,6 @@ public class Elevator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Peace out bitches");
             Destroy(this);
         }
     }
