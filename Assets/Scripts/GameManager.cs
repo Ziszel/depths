@@ -50,6 +50,11 @@ public class GameManager : MonoBehaviour
         _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
         _optionsMenuCanvas.SetActive(false);
 
+        // Cursor will be shown and not locked on both main menu and game level 
+        // as start of game level shows letter UI
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         if (scene.name == "MainMenu")
         {
             _mainMenuCanvas = GameObject.Find("MainMenuCanvas");
@@ -64,11 +69,9 @@ public class GameManager : MonoBehaviour
         }
         else // We're in a game level or testing level
         {
-            // Show letter, enable mouse controls, and initially pause game whilst user reads the letter
+            // Show letter, and initially pause game whilst user reads the letter (unpauses on letter continue)
             _letterCanvas = GameObject.Find("LetterCanvas");
             _letterCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
             Time.timeScale = 0f;
 
             // Start the game level with a black screen, fading into the letter screen
