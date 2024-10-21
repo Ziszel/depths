@@ -4,23 +4,53 @@ using System.Collections;
 public class MusicManager : MonoBehaviour
 {
     [Header("Audio Source")]
-    private AudioSource _musicSource;
+    [SerializeField] private AudioSource _musicSource;
 
-    private float fadeDuration = 3.0f;
+    [Header("Audio clips")]
+    [SerializeField] private AudioClip _introMusic;
+    [SerializeField] private AudioClip _wanderingMusic;
+    [SerializeField] private AudioClip _chaseMusic;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        _musicSource = GetComponent<AudioSource>();
+        if (_musicSource)
+        {
+            AssignIntroMusic();
+        }
+    }
+
+    public void AssignIntroMusic()
+    {
+        _musicSource.clip = _introMusic;
+    }
+    public void AssignWanderingMusic()
+    {
+        _musicSource.clip = _wanderingMusic;
+    }
+    public void AssignChaseMusic()
+    {
+        _musicSource.clip = _chaseMusic;
+    }
+
+    public void Play()
+    {
+        _musicSource.volume = 1.0f;
+        _musicSource.Play();
+    }
+
+    public bool IsPlaying()
+    {
+        return _musicSource.isPlaying;
     }
 
     // Update is called once per frame
-    public void TriggerFadeOutMusic()
+    public void TriggerFadeOutMusic(float fadeDuration = 3.0f)
     {
-        StartCoroutine(FadeOutMusic());
+        StartCoroutine(FadeOutMusic(fadeDuration));
     }
 
-    private IEnumerator FadeOutMusic()
+    private IEnumerator FadeOutMusic(float fadeDuration)
     {
         float startVolume = _musicSource.volume;
 

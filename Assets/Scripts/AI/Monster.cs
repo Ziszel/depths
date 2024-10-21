@@ -15,7 +15,15 @@ public class Monster : MonoBehaviour
         Chase,
         SafePath // Follow a path but do NOT allow for chasing the player
     }
-    
+
+    private bool isChasing = false;
+
+    // Delegates
+    public delegate void ChaseStateEnterHandler();
+    public event ChaseStateEnterHandler OnChaseStateEntered;
+    public delegate void ChaseStateExitHandler();
+    public event ChaseStateExitHandler OnChaseStateExited;
+
     // Components
     private PlayerController _player;
     private NavMeshAgent _agent;
@@ -49,7 +57,7 @@ public class Monster : MonoBehaviour
         _player = FindAnyObjectByType<PlayerController>();
         _monsterAudio = GetComponentInChildren<MonsterAudio>();
         _currentChaseTime = 0.0f;
-        
+
         // subscribe to events
         _player.OnPlayerLookingAtMonster += SetIsPlayerLooking;
     }
@@ -64,10 +72,17 @@ public class Monster : MonoBehaviour
                 OnPlayerWithinKillDistance?.Invoke();
             }
         }
-        
+
+
         switch (_monsterState)
         {
             case MonsterState.None:
+                if (isChasing)
+                {
+                    OnChaseStateExited?.Invoke();
+                }
+                isChasing = false;
+
                 _agent.destination = transform.position;
                 break;
             case MonsterState.ChasePath:
@@ -87,6 +102,12 @@ public class Monster : MonoBehaviour
                 _timeUntilScreech -= Time.deltaTime;
                 break;
             case MonsterState.Chase:
+                if (!isChasing)
+                {
+                    OnChaseStateEntered?.Invoke();
+                }
+                isChasing = true;
+
                 if (_currentChaseTime > minimumChaseTime)
                 {
                     if (CanMonsterSeePlayer())
@@ -104,6 +125,13 @@ public class Monster : MonoBehaviour
                 _timeUntilScreech -= Time.deltaTime;
                 break;
             case MonsterState.SafePath:
+                
+                if (isChasing)
+                {
+                    OnChaseStateExited?.Invoke();
+                }
+                isChasing = false;
+
                 // Traverse a path
                 if (Vector3.Distance(transform.position, _pathNodes[_currentNodeIndicator]) 
                     < _minimumDistanceToNode)
@@ -130,6 +158,7 @@ public class Monster : MonoBehaviour
             _monsterAudio.PlaySFX();
             _timeUntilScreech = monsterScreechRate;
         }
+
     }
 
     private bool CanMonsterSeePlayer()
