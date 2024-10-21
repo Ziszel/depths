@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Splines;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour
 
     private float _bestTime;
 
-    /* Storing in this class so we can access them across levels */
+    /* Storing these in this class so we can access them across levels */
     private GameObject _mainMenuCanvas;
     private GameObject _optionsMenuCanvas; 
     private GameObject _creditsCanvas;
+    private GameObject _letterCanvas;
+
+    private BlackFadeTransition blackFadeTransition;
+    private GameObject _blackFadeCanvas;
 
     private GameObject _mainMenuBtn; 
     private GameObject _resumeBtn;
@@ -53,19 +57,28 @@ public class GameManager : MonoBehaviour
             _creditsCanvas = GameObject.Find("CreditsCanvas");
             _creditsCanvas.SetActive(false);
 
-            // Adjust button layout of options menu
+            // Adjust button layout of options menu for main menu
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
         }
-        if (scene.name == "MainLevel" || scene.name == "KaliTest2_OptionsTesting") // leaving my level here for future testing
+        if (scene.name == "MainLevel" || scene.name == "KaliTest") // leaving my level here for future testing
         {
-            // Ensure game is unpaused upon entering game levels
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // Show letter, enable mouse controls, and initially pause game whilst user reads the letter
+            _letterCanvas = GameObject.Find("LetterCanvas");
+            _letterCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
 
-            // Adjust button layout of options menu
+            // Start the game level with a black screen, fading into the letter screen
+            _blackFadeCanvas = GameObject.Find("BlackFadeCanvas");
+            _blackFadeCanvas.SetActive(true);
+
+            blackFadeTransition = _blackFadeCanvas.GetComponentInChildren<BlackFadeTransition>();
+            blackFadeTransition.TriggerFadeFromBlack(null);
+
+            // Adjust button layout of options menu for game level
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector3(110, -61, 0);
             _resumeBtn.SetActive(true);
@@ -146,6 +159,32 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager ShowOptionsCanvas(): Could not find the main menu canvas object");
         }
+    }
+
+    public void LetterContinue()
+    {
+        // After the player is done reading the letter and they press continue 
+        _blackFadeCanvas.SetActive(true);
+        blackFadeTransition.TriggerFadeToBlackAndBack(DeactivateLetter, null); // This will call DeactivateBlackFade() once fade is complete
+
+        //_letterCanvas.SetActive(false); // this needs to be called after transition is complete
+
+        // Deactivate the cursor when beginning the game after reading the letter
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
+        // Ensure game is unpaused after user reads letter
+        Time.timeScale = 1f;
+    }
+
+    public void DeactivateBlackFade()
+    {
+        _blackFadeCanvas.SetActive(false);
+    }
+
+    public void DeactivateLetter()
+    {
+        _letterCanvas.SetActive(false);
     }
 
     public void Pause()
