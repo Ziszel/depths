@@ -21,8 +21,16 @@ public class SetMonsterStateTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Set monster state");
-            _monster.SetMonsterState(_monsterState, pathNodes, monsterPosition);
+            if (_monsterState == Monster.MonsterState.None)
+            {
+                // will handle moving to none properly
+                _monster.SetMonsterState(_monsterState);
+            }
+            else
+            {
+                // paths and chase need the alternative SetMonsterState call
+                _monster.SetMonsterState(_monsterState, pathNodes, _monster.transform.position);
+            }
         }
     }
 
