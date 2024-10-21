@@ -2292,6 +2292,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.309136
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.282
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603787271407370630, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5205584740308297599, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
       propertyPath: m_Size.x
       value: 1.7022784
@@ -2312,6 +2344,18 @@ PrefabInstance:
       propertyPath: Switchable
       value: 
       objectReference: {fileID: 1974561181}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: rotationVector.x
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: rotationVector.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: rotationVector.z
+      value: 146
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2391,6 +2435,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2278430614722496477, guid: b2b21503e182449dc93e40aa123f6f26, type: 3}
+      propertyPath: _monsterState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3240547943725477474, guid: b2b21503e182449dc93e40aa123f6f26, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.44
