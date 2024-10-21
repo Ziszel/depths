@@ -12,12 +12,14 @@ public class Switch : MonoBehaviour, IInteractable
     private PlayerController _player;
     private bool _isSwitchDown;
     private Transform _lever;
+    private SwitchAudio _switchAudio;
     
     private void Start()
     {
         _isSwitchDown = false;
         _player = FindAnyObjectByType<PlayerController>();
         _lever = GetComponentsInChildren<Transform>().First(k => k.gameObject.name == "Lever");
+        _switchAudio = GetComponent<SwitchAudio>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,7 +78,8 @@ public class Switch : MonoBehaviour, IInteractable
         if (Switchable.TryGetComponent(out ISwitchable switchable))
         {
             StartCoroutine(MoveSwitch());
-            switchable.Toggle();   
+            switchable.Toggle();
+            _switchAudio.PlaySfx();
         }
     }
 }
