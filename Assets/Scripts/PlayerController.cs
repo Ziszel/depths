@@ -90,7 +90,10 @@ public class PlayerController : MonoBehaviour
 
         if (_inputActions.Player.Move.WasPerformedThisFrame())
         {
-            _playerAudio.PlaySfx();
+            if (_floorCollider.IsOnGround())
+            {
+                _playerAudio.PlaySfx();
+            }
         }
     }
 
@@ -195,6 +198,10 @@ public class PlayerController : MonoBehaviour
             {
                 _isPlayerWalking = true;
             }
+        }
+        else
+        {
+            _isPlayerWalking = false;
         }
         
         // Rotate the player to face the direction the camera is looking at
