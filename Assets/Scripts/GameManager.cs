@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
 
     /* Audio */
     private MusicManager _musicManager;
-    //private AudioSource _musicAudioSource;
 
     /* Monster */
     Monster monster;

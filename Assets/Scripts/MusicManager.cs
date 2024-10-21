@@ -32,6 +32,10 @@ public class MusicManager : MonoBehaviour
     {
         _musicSource.clip = _chaseMusic;
     }
+    public bool IsAssignedWanderingMusic()
+    {
+        return _musicSource.clip == _wanderingMusic;
+    }
 
     public void Play()
     {
