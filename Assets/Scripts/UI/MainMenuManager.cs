@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartGameClicked()
     {
-        GameManager.instance.LoadLevel("MainLevel"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
+        GameManager.instance.LoadLevel("KaliTest"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
     }
 
     private void OnOptionsClicked()
