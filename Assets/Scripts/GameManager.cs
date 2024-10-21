@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
         }
-        if (scene.name == "MainLevel" || scene.name == "KaliTest") // leaving my level here for future testing
+        else // We're in a game level or testing level
         {
             // Show letter, enable mouse controls, and initially pause game whilst user reads the letter
             _letterCanvas = GameObject.Find("LetterCanvas");
