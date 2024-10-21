@@ -5,7 +5,9 @@ using UnityEngine.Audio;
 
 public class OptionsManager : MonoBehaviour
 {
-    private Button _optionsBackBtn;
+    // edit
+    private Button _optionsMainMenuBtn;
+    private Button _optionsResumeBtn;
 
     public Slider _mouseSensitivitySlider;
     public Slider _musicVolumeSlider;
@@ -28,13 +30,17 @@ public class OptionsManager : MonoBehaviour
         _musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
         _sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
 
-        _optionsBackBtn = transform.Find("BackBtn").GetComponent<Button>();
-        _optionsBackBtn.onClick.AddListener(OnOptionsBackClicked);
+        _optionsMainMenuBtn = transform.Find("OptionsMainMenuBtn").GetComponent<Button>();
+        _optionsMainMenuBtn.onClick.AddListener(OnMainMenuClicked);
+
+        _optionsResumeBtn = transform.Find("ResumeBtn").GetComponent<Button>();
+        _optionsResumeBtn.onClick.AddListener(OnOptionsResumeClicked);
 
         // then attempt to set actual values as we might have 'just loaded in' to the in-game
         if (!isMainMenu)
         {
-            _optionsBackBtn.GetComponentInChildren<TextMeshProUGUI>().SetText("RESUME");
+            // instead of this - we want to enable a 2nd button called resume
+            //_optionsBackBtn.GetComponentInChildren<TextMeshProUGUI>().SetText("RESUME");
 
             InitialiseOptions();
         }
@@ -54,10 +60,15 @@ public class OptionsManager : MonoBehaviour
         _SFXMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
     }
 
-    private void OnOptionsBackClicked()
+    private void OnMainMenuClicked()
     {
-        Debug.Log("OPTIONS MENU BUTTON CLICKED");
-        GameManager.instance.ShowMainMenuCanvas();
+        Debug.Log("OPTIONS MENU MAINMENU BUTTON CLICKED");
+        GameManager.instance.ShowMainMenu();
+    }
+    private void OnOptionsResumeClicked()
+    {
+        Debug.Log("OPTIONS MENU RESUME BUTTON CLICKED");
+        GameManager.instance.Unpause();
     }
 
     private void OnMouseSensitivityChanged(float value)
