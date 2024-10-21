@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -12,17 +13,22 @@ public class BlackFadeTransition : MonoBehaviour
         blackBackground = transform.Find("BlackBackground").GetComponent<Image>();
     }
 
-    public void TriggerFadeToBlack()
+    public void TriggerFadeToBlack(Action onFadeComplete)
     {
-        StartCoroutine(FadeToBlack());
+        StartCoroutine(FadeToBlack(onFadeComplete));
     }
 
-    public void TriggerFadeFromBlack()
+    public void TriggerFadeFromBlack(Action onFadeComplete)
     {
-        StartCoroutine(FadeFromBlack());
+        StartCoroutine(FadeFromBlack(onFadeComplete));
     }
 
-    private IEnumerator FadeToBlack()
+    public void TriggerFadeToBlackAndBack(Action onFadeToBlack, Action onFadeBackIn)
+    {
+        StartCoroutine(FadeToBlackAndBack(onFadeToBlack, onFadeBackIn));
+    }
+
+    private IEnumerator FadeToBlack(Action onFadeComplete)
     {
         float elapsedTime = 0;
         SetBackgroundTransparency(0);
@@ -37,9 +43,10 @@ public class BlackFadeTransition : MonoBehaviour
         }
 
         GameManager.instance.DeactivateBlackFade();
+        onFadeComplete?.Invoke();
     }
 
-    private IEnumerator FadeFromBlack()
+    private IEnumerator FadeFromBlack(Action onFadeComplete)
     {
         float elapsedTime = 0;
         SetBackgroundTransparency(1);
@@ -54,6 +61,40 @@ public class BlackFadeTransition : MonoBehaviour
         }
 
         GameManager.instance.DeactivateBlackFade();
+        onFadeComplete?.Invoke();
+    }
+
+    private IEnumerator FadeToBlackAndBack(Action onFadeToBlack, Action onFadeBackIn)
+    {
+        float elapsedTime = 0;
+        SetBackgroundTransparency(0);
+        yield return new WaitForSeconds(1f);
+
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            SetBackgroundTransparency(Mathf.Clamp01(elapsedTime / transitionDuration));
+            Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
+            yield return null;
+        }
+
+        onFadeToBlack?.Invoke();
+        SetBackgroundTransparency(1);
+        yield return new WaitForSecondsRealtime(1f); // Wait for a moment before fading back in
+
+        // Now fade back in
+        elapsedTime = 0;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            SetBackgroundTransparency(Mathf.Clamp01(1 - (elapsedTime / transitionDuration)));
+            yield return null;
+        }
+
+        SetBackgroundTransparency(0); // Ensure it's fully transparent
+
+        GameManager.instance.DeactivateBlackFade();
+        onFadeBackIn?.Invoke();
     }
 
     private void SetBackgroundTransparency(float transparency)

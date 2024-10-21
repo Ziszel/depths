@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private GameObject _creditsCanvas;
     private GameObject _letterCanvas;
 
-    [SerializeField] private BlackFadeTransition blackFadeTransition;
+    private BlackFadeTransition blackFadeTransition;
     private GameObject _blackFadeCanvas;
 
     private GameObject _mainMenuBtn; 
@@ -75,8 +75,8 @@ public class GameManager : MonoBehaviour
             _blackFadeCanvas = GameObject.Find("BlackFadeCanvas");
             _blackFadeCanvas.SetActive(true);
 
-            BlackFadeTransition blackFadeTransition = _blackFadeCanvas.GetComponentInChildren<BlackFadeTransition>();
-            blackFadeTransition.TriggerFadeFromBlack();
+            blackFadeTransition = _blackFadeCanvas.GetComponentInChildren<BlackFadeTransition>();
+            blackFadeTransition.TriggerFadeFromBlack(null);
 
             // Adjust button layout of options menu for game level
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
@@ -163,11 +163,15 @@ public class GameManager : MonoBehaviour
 
     public void LetterContinue()
     {
-        _letterCanvas.SetActive(false);
+        // After the player is done reading the letter and they press continue 
+        _blackFadeCanvas.SetActive(true);
+        blackFadeTransition.TriggerFadeToBlackAndBack(DeactivateLetter, null); // This will call DeactivateBlackFade() once fade is complete
+
+        //_letterCanvas.SetActive(false); // this needs to be called after transition is complete
 
         // Deactivate the cursor when beginning the game after reading the letter
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         // Ensure game is unpaused after user reads letter
         Time.timeScale = 1f;
@@ -176,6 +180,11 @@ public class GameManager : MonoBehaviour
     public void DeactivateBlackFade()
     {
         _blackFadeCanvas.SetActive(false);
+    }
+
+    public void DeactivateLetter()
+    {
+        _letterCanvas.SetActive(false);
     }
 
     public void Pause()
