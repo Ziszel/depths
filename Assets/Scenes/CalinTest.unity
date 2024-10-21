@@ -2631,6 +2631,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1239504073}
+    - target: {fileID: 8498430340932732213, guid: af41cb622681bdd2d8e8ffd8b516deaa, type: 3}
+      propertyPath: maxCrouchVelocity
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

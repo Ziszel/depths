@@ -102,7 +102,10 @@ public class PlayerController : MonoBehaviour
         SetMovementValues();
         MoveAndRotate();
 
-        _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+        if (_floorCollider.IsOnGround())
+        {
+            _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+        }
     }
     
     // Input events
