@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    private AudioSource _musicAudioSource;
 
     private float _bestTime;
 
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     private BlackFadeTransition blackFadeTransition;
     private GameObject _blackFadeCanvas;
+
+    private MusicManager musicManager;
 
     private GameObject _mainMenuBtn; 
     private GameObject _resumeBtn;
@@ -73,6 +76,11 @@ public class GameManager : MonoBehaviour
             _letterCanvas = GameObject.Find("LetterCanvas");
             _letterCanvas.SetActive(true);
             Time.timeScale = 0f;
+            /*_musicAudioSource = FindFirstObjectByType<AudioSource>();
+            if (_musicAudioSource != null && !_musicAudioSource.isPlaying)
+            {
+                _musicAudioSource.Play();
+            }*/
 
             // Start the game level with a black screen, fading into the letter screen
             _blackFadeCanvas = GameObject.Find("BlackFadeCanvas");
@@ -80,6 +88,8 @@ public class GameManager : MonoBehaviour
 
             blackFadeTransition = _blackFadeCanvas.GetComponentInChildren<BlackFadeTransition>();
             blackFadeTransition.TriggerFadeFromBlack(null);
+
+            musicManager = GameObject.Find("MusicAudioSource").GetComponentInChildren<MusicManager>();
 
             // Adjust button layout of options menu for game level
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
@@ -170,11 +180,11 @@ public class GameManager : MonoBehaviour
         _blackFadeCanvas.SetActive(true);
         blackFadeTransition.TriggerFadeToBlackAndBack(DeactivateLetter, null); // This will call DeactivateBlackFade() once fade is complete
 
-        //_letterCanvas.SetActive(false); // this needs to be called after transition is complete
-
         // Deactivate the cursor when beginning the game after reading the letter
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        musicManager.TriggerFadeOutMusic();
 
         // Ensure game is unpaused after user reads letter
         Time.timeScale = 1f;
