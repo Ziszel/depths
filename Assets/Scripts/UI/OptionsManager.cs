@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 
 public class OptionsManager : MonoBehaviour
 {
+    // edit
     private Button _optionsMainMenuBtn;
     private Button _optionsResumeBtn;
 
