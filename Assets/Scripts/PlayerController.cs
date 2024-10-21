@@ -90,7 +90,10 @@ public class PlayerController : MonoBehaviour
 
         if (_inputActions.Player.Move.WasPerformedThisFrame())
         {
-            _playerAudio.PlaySfx();
+            if (_floorCollider.IsOnGround())
+            {
+                _playerAudio.PlaySfx();
+            }
         }
     }
 
@@ -99,7 +102,10 @@ public class PlayerController : MonoBehaviour
         SetMovementValues();
         MoveAndRotate();
 
-        _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+        if (_floorCollider.IsOnGround())
+        {
+            _rb.linearVelocity = Vector3.ClampMagnitude(_rb.linearVelocity, maxMovementVelocity);
+        }
     }
     
     // Input events
@@ -195,6 +201,10 @@ public class PlayerController : MonoBehaviour
             {
                 _isPlayerWalking = true;
             }
+        }
+        else
+        {
+            _isPlayerWalking = false;
         }
         
         // Rotate the player to face the direction the camera is looking at
