@@ -2259,6 +2259,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor2FinalArt
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 1171549304580213878, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -3855,7 +3859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3732214837168297163, guid: c2ef586496743eff9acff01499406e82, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.687
+      value: 1.707
       objectReference: {fileID: 0}
     - target: {fileID: 3732214837168297163, guid: c2ef586496743eff9acff01499406e82, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4068,7 +4072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8523188303481359612, guid: 44bc2185937fc46b09e55df7889ea71a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4533,7 +4537,7 @@ Transform:
   m_GameObject: {fileID: 1676988713}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16594149, y: 1.687, z: -3.9367368}
+  m_LocalPosition: {x: -0.16594149, y: 1.707, z: -3.9367368}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

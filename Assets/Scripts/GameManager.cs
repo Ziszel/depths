@@ -79,8 +79,7 @@ public class GameManager : MonoBehaviour
         {
             // Show letter, and initially pause game whilst user reads the letter (unpauses on letter continue)
             _letterCanvas = GameObject.Find("LetterCanvas");
-            _letterCanvas.SetActive(true);
-            Time.timeScale = 0f;
+            ActivateLetter();
 
             // Start the game level with a black screen, fading into the letter screen
             _blackFadeCanvas = GameObject.Find("BlackFadeCanvas");
@@ -205,9 +204,25 @@ public class GameManager : MonoBehaviour
         _blackFadeCanvas.SetActive(false);
     }
 
+    public void ActivateLetter()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+        _letterCanvas.SetActive(true);
+    }
+
     public void DeactivateLetter()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
         _letterCanvas.SetActive(false);
+    }
+
+    public bool IsLetterActive()
+    {
+        return _letterCanvas.activeSelf;
     }
 
     public void Pause()
