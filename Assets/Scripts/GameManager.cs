@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
             // Adjust button layout of options menu for game level
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector3(110, -61, 0);
+            rectTransform.anchoredPosition = new Vector3(146, -323, 0);
             _resumeBtn.SetActive(true);
         }
     }
