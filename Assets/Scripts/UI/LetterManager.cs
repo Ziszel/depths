@@ -9,14 +9,7 @@ public class LetterManager : MonoBehaviour
 
     void Start()
     {
-        //_letterExitBtn = transform.Find("LetterExitBtn").GetComponent<Button>();
-        /*if (!_letterExitBtn)
-        {
-            Debug.LogError("Button component not found on LetterExitBtn!");
-        }*/
         _letterExitBtn.onClick.AddListener(OnLetterExitClicked);
-
-        //_letterContinueBtn = transform.Find("LetterContinueBtn").GetComponent<Button>();
         _letterContinueBtn.onClick.AddListener(OnLetterContinueClicked);
     }
 
