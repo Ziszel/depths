@@ -912,7 +912,7 @@ MonoBehaviour:
   wobbleAmplitude: 2
   wobbleFrequency: 10
   audioClip: {fileID: 0}
-  sequenceDuration: 5
+  sequenceDuration: 10
 --- !u!1 &497331643
 GameObject:
   m_ObjectHideFlags: 0

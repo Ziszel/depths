@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,11 @@ public class HorizontalDoor : DoorBase, ISwitchable
 {
     [SerializeField] private Vector3 movementAmount = new(0.0f, 0.0f, 30.0f);
     
+    private void Start()
+    {
+        _doorAudio = GetComponent<DoorAudio>();
+    }
+
     protected override IEnumerator OpenDoor()
     {
         float timeElapsed = 0.0f;
@@ -25,6 +31,7 @@ public class HorizontalDoor : DoorBase, ISwitchable
     {
         if (!IsOpen)
         {
+            _doorAudio.PlaySfx();
             StartCoroutine(OpenDoor());
             IsOpen = true;
         }
