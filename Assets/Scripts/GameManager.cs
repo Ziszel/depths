@@ -173,8 +173,8 @@ public class GameManager : MonoBehaviour
         //_letterCanvas.SetActive(false); // this needs to be called after transition is complete
 
         // Deactivate the cursor when beginning the game after reading the letter
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         // Ensure game is unpaused after user reads letter
         Time.timeScale = 1f;

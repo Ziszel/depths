@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private float _timeUntilFootstep;
     private float _currentFootstepRate;
     private bool _isPlayerWalking;
+    private bool _isCrouching;
     
     // Components
     private PlayerInput _inputActions;
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
         IsPlayerLookingAtMonster();
         
         // Handle timers
-        if (_isPlayerWalking)
+        if (_isPlayerWalking && !_isCrouching)
         {
             _timeUntilFootstep -= Time.deltaTime;
             if (_timeUntilFootstep < 0.0f)
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
         if (_inputActions.Player.Move.WasPerformedThisFrame())
         {
-            if (_floorCollider.IsOnGround())
+            if (_floorCollider.IsOnGround() && !_isCrouching)
             {
                 _playerAudio.PlaySfx();
             }
@@ -164,6 +165,7 @@ public class PlayerController : MonoBehaviour
                 _cinemachineCamera.Target.TrackingTarget = crouch.transform;
                 movementVelocity = crouchVelocity;
                 maxMovementVelocity = maxCrouchVelocity;
+                _isCrouching = true;
             }
         }
         // Check if sprinting
@@ -172,6 +174,7 @@ public class PlayerController : MonoBehaviour
             _cinemachineCamera.Target.TrackingTarget = head.transform;
             maxMovementVelocity = maxSprintVelocity;
             _currentFootstepRate = sprintingRate;
+            _isCrouching = false;
         }
         // We are walking
         else
@@ -180,6 +183,7 @@ public class PlayerController : MonoBehaviour
             movementVelocity = walkVelocity;
             maxMovementVelocity = maxWalkVelocity;
             _currentFootstepRate = walkingRate;
+            _isCrouching = false;
         }
     }
 
@@ -208,7 +212,7 @@ public class PlayerController : MonoBehaviour
         }
         
         // Rotate the player to face the direction the camera is looking at
-        transform.rotation =  Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
+        transform.rotation = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
     }
 
     public void IsPlayerLookingAtMonster()
