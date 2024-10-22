@@ -2557,6 +2557,18 @@ PrefabInstance:
       propertyPath: rotationVector.z
       value: 146
       objectReference: {fileID: 0}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: Switchables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: 'Switchables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1974561181}
+    - target: {fileID: 8714493779680707829, guid: 3f5d26dc2b51893bd88a599f06cadb5c, type: 3}
+      propertyPath: 'Switchables.Array.data[1]'
+      value: 
+      objectReference: {fileID: 747281305}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
