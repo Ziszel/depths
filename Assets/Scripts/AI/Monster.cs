@@ -15,24 +15,43 @@ public class Monster : MonoBehaviour
         Chase,
         SafePath // Follow a path but do NOT allow for chasing the player
     }
-    
+
+    private bool isChasing = false;
+
+    // Delegates
+    public delegate void ChaseStateEnterHandler();
+    public event ChaseStateEnterHandler OnChaseStateEntered;
+    public delegate void ChaseStateExitHandler();
+    public event ChaseStateExitHandler OnChaseStateExited;
+
+    // Components
     private PlayerController _player;
     private NavMeshAgent _agent;
-    private bool _isPlayerLookingAtMe;
     private MonsterState _monsterState;
     private LevelManager _levelManager;
+    private MonsterAudio _monsterAudio;
     
     // path node logic
     private int _currentNodeIndicator;
     private int _previousNodeIndicator;
     private List<Vector3> _pathNodes;
-    private readonly float _minimumDistanceToNode = 5.0f;
+    private readonly float _minimumDistanceToNode = 2.0f;
+    private bool _isPlayerLookingAtMe;
     
     // Chase helpers
     [SerializeField] private float minimumChaseTime = 2.0f;
     private float _currentChaseTime;
 
-    [SerializeField] private float _killRange;
+    [Header("Control values")] 
+    // Speed of the monster when walking a path
+    [SerializeField] private float _pathSpeed = 2.0f;
+    // Speed of the monster when chasing
+    [SerializeField] private float _chaseSpeed = 4.0f;
+    // Proximity to the player in units until they kill them
+    [SerializeField] private float _killRange = 1.5f;
+    // monster audio timers including how often it screeches based on those timers
+    [SerializeField] private float monsterScreechRate = 7.5f; 
+    private float _timeUntilScreech;
     
     private void Start()
     {
@@ -41,8 +60,9 @@ public class Monster : MonoBehaviour
         _levelManager = FindAnyObjectByType<LevelManager>();
         _agent = GetComponent<NavMeshAgent>();
         _player = FindAnyObjectByType<PlayerController>();
+        _monsterAudio = GetComponentInChildren<MonsterAudio>();
         _currentChaseTime = 0.0f;
-        
+
         // subscribe to events
         _player.OnPlayerLookingAtMonster += SetIsPlayerLooking;
     }
@@ -57,13 +77,21 @@ public class Monster : MonoBehaviour
                 OnPlayerWithinKillDistance?.Invoke();
             }
         }
-        
+
         switch (_monsterState)
         {
             case MonsterState.None:
+                if (isChasing)
+                {
+                    OnChaseStateExited?.Invoke();
+                }
+                isChasing = false;
+                _agent.speed = _pathSpeed;
+
                 _agent.destination = transform.position;
                 break;
             case MonsterState.ChasePath:
+                _agent.speed = _pathSpeed;
                 if (CanMonsterSeePlayer())
                 {
                     _agent.destination = _player.transform.position;
@@ -76,8 +104,16 @@ public class Monster : MonoBehaviour
                         RandomlySetNextNode();
                     }
                 }
+                _timeUntilScreech -= Time.deltaTime;
                 break;
             case MonsterState.Chase:
+                _agent.speed = _chaseSpeed;
+                if (!isChasing)
+                {
+                    OnChaseStateEntered?.Invoke();
+                }
+                isChasing = true;
+
                 if (_currentChaseTime > minimumChaseTime)
                 {
                     if (CanMonsterSeePlayer())
@@ -92,8 +128,16 @@ public class Monster : MonoBehaviour
                 }
                 _agent.destination = _player.transform.position;
                 _currentChaseTime += Time.deltaTime;
+                _timeUntilScreech -= Time.deltaTime;
                 break;
             case MonsterState.SafePath:
+                _agent.speed = _pathSpeed;
+                if (isChasing)
+                {
+                    OnChaseStateExited?.Invoke();
+                }
+                isChasing = false;
+
                 // Traverse a path
                 if (Vector3.Distance(transform.position, _pathNodes[_currentNodeIndicator]) 
                     < _minimumDistanceToNode)
@@ -109,7 +153,13 @@ public class Monster : MonoBehaviour
                         _agent.destination = _pathNodes[_currentNodeIndicator];
                     }
                 }
+                _timeUntilScreech -= Time.deltaTime;
                 break;
+        }
+        if (_timeUntilScreech < 0.0f)
+        {
+            _monsterAudio.PlaySFX();
+            _timeUntilScreech = monsterScreechRate;
         }
     }
 
@@ -174,10 +224,22 @@ public class Monster : MonoBehaviour
 
     public void SetMonsterState(MonsterState monsterState, List<Vector3> newPathNodes, Vector3 newPosition)
     {
+        Debug.Log("monster position: " + transform.position);
         transform.position = newPosition;
+        Debug.Log("monster position: " + transform.position);
         _monsterState = monsterState;
         _currentNodeIndicator = 0;
         _pathNodes = newPathNodes;
         _agent.destination = _pathNodes[_currentNodeIndicator];
+
+        // Always plays an SFX when state changes
+        Debug.Log("monster screeching on state change");
+        _monsterAudio.PlaySFX();
+        _timeUntilScreech = monsterScreechRate;
+    }
+
+    public MonsterState GetMonsterState()
+    {
+        return _monsterState;
     }
 }

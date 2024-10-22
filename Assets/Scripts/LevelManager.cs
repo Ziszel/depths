@@ -3,6 +3,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public Transform checkpointTransform;
+    public InteractHelpUI _InteractHelpUI;
     private static float _timer;
 
     private GameManager _gameManager;
@@ -19,6 +20,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _timer = 0;
+        // _InteractHelpUI = FindAnyObjectByType<InteractHelpUI>();
         _gameManager = FindAnyObjectByType<GameManager>();
         _player = FindAnyObjectByType<PlayerController>();
         _monster = FindAnyObjectByType<Monster>();
@@ -103,5 +105,16 @@ public class LevelManager : MonoBehaviour
     {
         _timeUntilRespawn = respawnTime;
         _playerDead = true;
+    }
+    
+    // Global UI level utilities
+    public void ActivateInteractUI()
+    {
+        _InteractHelpUI.SetWhetherChildrenActive(true);
+    }
+    
+    public void DeActivateInteractUI()
+    {
+        _InteractHelpUI.SetWhetherChildrenActive(false);
     }
 }

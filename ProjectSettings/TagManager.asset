@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Monster
+  - FloorCollider
+  - Floor
+  - Light
   layers:
   - Default
   - TransparentFX

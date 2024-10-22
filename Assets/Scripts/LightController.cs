@@ -1,8 +1,9 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class LightController : MonoBehaviour, ISwitchable
+public class LightController : MonoBehaviour, ISwitchable, IMonsterInteractable
 {
+    // Note: The actual light, it doesn't have to be flickering
     private Light _flickeringLight;
     private float _timer = 0;
 
@@ -70,5 +71,15 @@ public class LightController : MonoBehaviour, ISwitchable
             _flickeringLight.gameObject.SetActive(true);
             _isFlickering = true;
         }
+    }
+    
+    public void AffectedByMonster()
+    {
+        _flickeringLight.enabled = false;
+    }
+
+    public void StopAffectedByMonster()
+    {
+        _flickeringLight.enabled = true;
     }
 }

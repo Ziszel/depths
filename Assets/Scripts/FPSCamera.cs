@@ -11,6 +11,7 @@ public class FPSCamera : MonoBehaviour
     }
     public void SetGain(float gain)
     {
+        Debug.Log("In FPSCamera: SetGain(). gain passed in: " + gain);
         if (inputAxisController != null)
         {
             foreach (var c in inputAxisController.Controllers)
@@ -18,7 +19,12 @@ public class FPSCamera : MonoBehaviour
                 if (c.Name == "Look X (Pan)")
                 {
                     c.Input.Gain = gain;
-                    break;
+                    Debug.Log("Altering Look X (Pan) gain ");
+                }
+                if (c.Name == "Look Y (Tilt)")
+                {
+                    c.Input.Gain = gain * -1;
+                    Debug.Log("Altering Look Y (Tilt) gain ");
                 }
             }
         }
