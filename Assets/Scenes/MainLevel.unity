@@ -8410,6 +8410,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 88
       objectReference: {fileID: 0}
+    - target: {fileID: 3187276287179711157, guid: 134044c30589cb346b2e4b16fa2eceb3, type: 3}
+      propertyPath: isMainMenu
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3416840188517118437, guid: 134044c30589cb346b2e4b16fa2eceb3, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
