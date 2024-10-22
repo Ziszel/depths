@@ -78,6 +78,7 @@ public class OptionsManager : MonoBehaviour
 
         if (!isMainMenu)
         {
+            Debug.Log("In OptionsManager: OnMouseSensitivityChanged(). Calling _FPSCamera.SetGain()");
             // only load in fps camera if we know we're not in main menu 
             _FPSCamera.SetGain(value);
         }
