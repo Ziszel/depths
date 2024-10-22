@@ -14,6 +14,7 @@ public class Switch : MonoBehaviour, IInteractable
     private bool _isSwitchDown;
     private Transform _lever;
     private SwitchAudio _switchAudio;
+    private LevelManager _levelManager;
     
     private void Start()
     {
@@ -21,12 +22,14 @@ public class Switch : MonoBehaviour, IInteractable
         _player = FindAnyObjectByType<PlayerController>();
         _lever = GetComponentsInChildren<Transform>().First(k => k.gameObject.name == "Lever");
         _switchAudio = GetComponent<SwitchAudio>();
+        _levelManager = FindAnyObjectByType<LevelManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            _levelManager.ActivateInteractUI();
             _player.SetCurrentInteractable(this.gameObject);
         }
     }
@@ -35,6 +38,7 @@ public class Switch : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
+            _levelManager.DeActivateInteractUI();
             _player.SetCurrentInteractable(null);
         }
     }
