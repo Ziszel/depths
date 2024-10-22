@@ -192,9 +192,9 @@ MonoBehaviour:
   walkVelocity: 2
   crouchVelocity: 1
   maxMovementVelocity: 2
-  maxCrouchVelocity: 2
+  maxCrouchVelocity: 0.5
   maxWalkVelocity: 1
-  maxSprintVelocity: 5
+  maxSprintVelocity: 4
   cameraTransform: {fileID: 0}
   fieldOfViewAngle: 60
   head: {fileID: 3011368273762302278}
