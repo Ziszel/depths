@@ -19,7 +19,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartGameClicked()
     {
-        GameManager.instance.LoadLevel("ElevatorTest"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
+        GameManager.instance.LoadLevel("MainLevel"); //CHANGE BACK TO MainLevel ONCE TESTING COMPLETE
     }
 
     private void OnOptionsClicked()
