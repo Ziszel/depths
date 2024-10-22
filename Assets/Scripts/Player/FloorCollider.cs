@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class FloorCollider : MonoBehaviour
 {
     public PlayerController player;
     private bool _onGround;
+    private bool _touchGroundWhilstOnGround;
 
     private void Start()
     {
