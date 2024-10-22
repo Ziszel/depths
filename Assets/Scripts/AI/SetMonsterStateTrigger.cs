@@ -29,7 +29,7 @@ public class SetMonsterStateTrigger : MonoBehaviour
             else
             {
                 // paths and chase need the alternative SetMonsterState call
-                _monster.SetMonsterState(_monsterState, pathNodes, _monster.transform.position);
+                _monster.SetMonsterState(_monsterState, pathNodes, monsterPosition);
             }
         }
     }
