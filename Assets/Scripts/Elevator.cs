@@ -10,12 +10,12 @@ public class Elevator : MonoBehaviour
     
     [SerializeField] private float wobbleAmplitude;
     [SerializeField] private float wobbleFrequency;
-    [SerializeField] private AudioClip audioClip;
     [SerializeField] private float sequenceDuration = 5.0f;
 
     private PlayerController _player;
     private CinemachineCamera _camera;
     private CinemachineBasicMultiChannelPerlin _perlinComponent;
+    private ElevatorAudio _elevatorAudio;
 
     private float _previousAmplitudeGain;
     private float _previousFrequencyGain;
@@ -25,6 +25,7 @@ public class Elevator : MonoBehaviour
         _player = FindAnyObjectByType<PlayerController>();
         _camera = FindAnyObjectByType<CinemachineCamera>();
         _perlinComponent = _camera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        _elevatorAudio = GetComponent<ElevatorAudio>();
         _previousAmplitudeGain = _perlinComponent.AmplitudeGain;
         _previousFrequencyGain = _perlinComponent.FrequencyGain;
     }
@@ -38,18 +39,22 @@ public class Elevator : MonoBehaviour
         
         _player.DisableInputActions();
         
+        _elevatorAudio.PlaySfx();
+        
         while (timeElapsed < sequenceDuration)
         {
             timeElapsed += Time.deltaTime;
             yield return null;
         }
         
+        // TODO: Make sure to set the correct audio on the doors used for the elevator!!
         doorOne.Toggle();
         doorTwo.Toggle();
         elevatorLight.StopFlicker();
         elevatorLight.TurnOnLight();
         _perlinComponent.AmplitudeGain = _previousAmplitudeGain;
         _perlinComponent.FrequencyGain = _previousFrequencyGain;
+        _elevatorAudio.StopSfx();
         _player.EnableInputActions();
     }
 

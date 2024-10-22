@@ -293,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 2933068016433985858}
   _footstep: {fileID: 8300000, guid: f696e63083c7420109b22203556bdd44, type: 3}
+  _death: {fileID: 8300000, guid: b8cb53aa9c59d7e308634b577992685e, type: 3}
 --- !u!1 &5068193573969465217
 GameObject:
   m_ObjectHideFlags: 0
