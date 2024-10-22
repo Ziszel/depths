@@ -150,6 +150,7 @@ public class PlayerController : MonoBehaviour
     public void OnKillPlayer()
     {
         DisableInputActions();
+        _playerAudio.PlayDeathSound();
         _rb.constraints = RigidbodyConstraints.None;
         OnPlayerDeath?.Invoke();
     }
