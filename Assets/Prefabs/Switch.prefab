@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchMovementTime: 2
-  Switchable: {fileID: 0}
+  Switchables: []
 --- !u!114 &2921524273195197464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 5804639882399300748}
-  _switchBeingPulled: {fileID: 8300000, guid: f696e63083c7420109b22203556bdd44, type: 3}
+  _switchBeingPulled: {fileID: 8300000, guid: 36bb34b0f1cb838f7993a2be1a6e5af5, type: 3}
 --- !u!65 &5205584740308297599
 BoxCollider:
   m_ObjectHideFlags: 0

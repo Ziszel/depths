@@ -1,23 +1,34 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LetterManager : MonoBehaviour
+public class LetterManager : MonoBehaviour, IInteractable
 {
-    // edit
     public Button _letterExitBtn;
     public Button _letterContinueBtn;
 
+    private PlayerController _player;
+
     void Start()
     {
-        //_letterExitBtn = transform.Find("LetterExitBtn").GetComponent<Button>();
-        /*if (!_letterExitBtn)
-        {
-            Debug.LogError("Button component not found on LetterExitBtn!");
-        }*/
+        _player = FindAnyObjectByType<PlayerController>();
         _letterExitBtn.onClick.AddListener(OnLetterExitClicked);
-
-        //_letterContinueBtn = transform.Find("LetterContinueBtn").GetComponent<Button>();
         _letterContinueBtn.onClick.AddListener(OnLetterContinueClicked);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _player.SetCurrentInteractable(this.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _player.SetCurrentInteractable(null);
+        }
     }
 
     private void OnLetterExitClicked()
@@ -29,5 +40,19 @@ public class LetterManager : MonoBehaviour
     {
         // call game manager to deactivate this 
         GameManager.instance.LetterContinue();
+    }
+
+    public void AttemptToInteract()
+    {
+        
+        if (GameManager.instance.IsLetterActive())
+        {
+            GameManager.instance.DeactivateLetter();
+        }
+        else
+        {
+            GameManager.instance.ActivateLetter();
+        }
+        // Figure out a way to hide buttons (or hide one and edit text of other) if we're not in initial starting letter
     }
 }

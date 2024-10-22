@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,11 +9,12 @@ public class Switch : MonoBehaviour, IInteractable
     private Vector3 rotationVectorUp = new ( 0.0f, 0.0f, 60.0f );
     private Vector3 rotationVectorDown = new (0.0f, 0.0f, 125.0f);
     
-    public GameObject Switchable;
+    public List<GameObject> Switchables;
     private PlayerController _player;
     private bool _isSwitchDown;
     private Transform _lever;
     private SwitchAudio _switchAudio;
+    private LevelManager _levelManager;
     
     private void Start()
     {
@@ -20,12 +22,14 @@ public class Switch : MonoBehaviour, IInteractable
         _player = FindAnyObjectByType<PlayerController>();
         _lever = GetComponentsInChildren<Transform>().First(k => k.gameObject.name == "Lever");
         _switchAudio = GetComponent<SwitchAudio>();
+        _levelManager = FindAnyObjectByType<LevelManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            _levelManager.ActivateInteractUI();
             _player.SetCurrentInteractable(this.gameObject);
         }
     }
@@ -34,6 +38,7 @@ public class Switch : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
+            _levelManager.DeActivateInteractUI();
             _player.SetCurrentInteractable(null);
         }
     }
@@ -75,11 +80,14 @@ public class Switch : MonoBehaviour, IInteractable
 
     public void AttemptToInteract()
     {
-        if (Switchable.TryGetComponent(out ISwitchable switchable))
+        foreach (var Switchable in Switchables)
         {
-            StartCoroutine(MoveSwitch());
-            switchable.Toggle();
-            _switchAudio.PlaySfx();
+            if (Switchable.TryGetComponent(out ISwitchable switchable))
+            {
+                StartCoroutine(MoveSwitch());
+                switchable.Toggle();
+                _switchAudio.PlaySfx();
+            }
         }
     }
 }
