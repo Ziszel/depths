@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd417865d544fac5aff5ccf8e9b9f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxViewDistance: 10
   minimumChaseTime: 2
   _pathSpeed: 4
   _chaseSpeed: 8
