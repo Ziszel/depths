@@ -292,7 +292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 2933068016433985858}
-  _footstep: {fileID: 8300000, guid: f696e63083c7420109b22203556bdd44, type: 3}
+  _footstepLeft: {fileID: 8300000, guid: b2227e5f1f4e37b4a9df16a2ecc7a7b3, type: 3}
+  _footstepRight: {fileID: 8300000, guid: 0f7f047f581d0c32a877a660507ee1ee, type: 3}
   _death: {fileID: 8300000, guid: b8cb53aa9c59d7e308634b577992685e, type: 3}
 --- !u!1 &5068193573969465217
 GameObject:
