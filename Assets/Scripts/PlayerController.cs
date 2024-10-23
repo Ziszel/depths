@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
             if (_timeUntilFootstep < 0.0f)
             {
                 _playerAudio.PlaySfx();
+                _playerAudio.SwapFeet();
                 _timeUntilFootstep = _currentFootstepRate;
             }
         }
