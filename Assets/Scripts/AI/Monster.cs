@@ -224,9 +224,11 @@ public class Monster : MonoBehaviour
 
     public void SetMonsterState(MonsterState monsterState, List<Vector3> newPathNodes, Vector3 newPosition)
     {
+        _agent.enabled = false;
         Debug.Log("monster position: " + transform.position);
         transform.position = newPosition;
         Debug.Log("monster position: " + transform.position);
+        _agent.enabled = true;
         _monsterState = monsterState;
         _currentNodeIndicator = 0;
         _pathNodes = newPathNodes;

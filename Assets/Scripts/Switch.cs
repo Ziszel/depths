@@ -66,7 +66,7 @@ public class Switch : MonoBehaviour, IInteractable
             yield return null;
         }*/
 
-        _lever.eulerAngles = moveToRotation;
+        _lever.localEulerAngles = moveToRotation;
 
         int i = _isSwitchDown ? 0 : 1;
 
