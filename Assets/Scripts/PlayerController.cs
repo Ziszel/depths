@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float walkingRate = 1.0f;
     [SerializeField] private float sprintingRate = 0.5f;
 
+    [Header("Looking at monster timer")] [SerializeField]
+    private float timeUntilDetectionTimer = 1.5f;
+
+    private float currentTimeUntilDetection;
+    
     private float _timeUntilFootstep;
     private float _currentFootstepRate;
     private bool _isPlayerWalking;
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour
         _interactable = null;
         _timeUntilFootstep = 0.0f; // stops it playing immediately or causing error
         _isPlayerWalking = false;
+        currentTimeUntilDetection = timeUntilDetectionTimer;
         
         // Hook up events
         _monster.OnPlayerWithinKillDistance += OnKillPlayer;
@@ -229,11 +235,17 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Monster"))
                 {
-                    OnPlayerLookingAtMonster?.Invoke(true);
+                    currentTimeUntilDetection += Time.deltaTime;
+                    if (currentTimeUntilDetection > timeUntilDetectionTimer)
+                    {
+                        OnPlayerLookingAtMonster?.Invoke(true);
+                        currentTimeUntilDetection = timeUntilDetectionTimer;
+                    }
                 }
                 else
                 {
                     OnPlayerLookingAtMonster?.Invoke(false);
+                    currentTimeUntilDetection = 0.0f;
                 }
             }
         }

@@ -16,6 +16,9 @@ public class Monster : MonoBehaviour
         SafePath // Follow a path but do NOT allow for chasing the player
     }
 
+    [Header("How far the monster can see")]
+    [SerializeField] private float maxViewDistance;
+    
     private bool isChasing = false;
 
     // Delegates
@@ -182,7 +185,7 @@ public class Monster : MonoBehaviour
         // Check if player is in line of sight of the monster
         Vector3 directionOfRay = (_player.transform.position - transform.position).normalized;
         Ray ray = new Ray(transform.position, directionOfRay);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxViewDistance))
         {
             if (hit.collider.CompareTag("Player"))
             {
