@@ -97,7 +97,6 @@ public class LevelManager : MonoBehaviour
 
     public void ResetMonster()
     {
-        Debug.Log("reset monster");
         _monster.SetMonsterState(Monster.MonsterState.None);
     }
 

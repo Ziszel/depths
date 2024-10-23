@@ -87,8 +87,7 @@ public class Monster : MonoBehaviour
                 }
                 isChasing = false;
                 _agent.speed = _pathSpeed;
-
-                _agent.destination = transform.position;
+                
                 break;
             case MonsterState.ChasePath:
                 _agent.speed = _pathSpeed;
@@ -217,7 +216,9 @@ public class Monster : MonoBehaviour
     // Only used for when monster state is setup to none
     public void SetMonsterState(MonsterState monsterState)
     {
+        _agent.destination = transform.position;
         _monsterState = monsterState;
+        _agent.enabled = false;
         transform.position = new Vector3(0.0f, -100.0f, 0.0f);
         _currentNodeIndicator = 0;
     }
