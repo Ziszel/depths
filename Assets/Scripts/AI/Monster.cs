@@ -245,12 +245,10 @@ public class Monster : MonoBehaviour
 
         if (monsterState == MonsterState.Chase)
         {
-            Debug.Log("sprint cunt");
             _monsterAnimation.SetStateToSprint();
         }
         else
         {
-            Debug.Log("walk cunt");
             _monsterAnimation.SetStateToWalk();
         }
 
