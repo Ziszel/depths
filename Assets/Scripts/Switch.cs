@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,9 @@ public class Switch : MonoBehaviour, IInteractable
     [SerializeField] private float switchMovementTime = 2.0f;
     private Vector3 rotationVectorUp = new ( 0.0f, 0.0f, 60.0f );
     private Vector3 rotationVectorDown = new (0.0f, 0.0f, 125.0f);
+
+    private Animator _animator;
+    public Action<GameObject> SwitchAnimation;
     
     public List<GameObject> Switchables;
     private PlayerController _player;
@@ -23,6 +27,7 @@ public class Switch : MonoBehaviour, IInteractable
         _lever = GetComponentsInChildren<Transform>().First(k => k.gameObject.name == "Lever");
         _switchAudio = GetComponent<SwitchAudio>();
         _levelManager = FindAnyObjectByType<LevelManager>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -84,7 +89,10 @@ public class Switch : MonoBehaviour, IInteractable
         {
             if (Switchable.TryGetComponent(out ISwitchable switchable))
             {
-                StartCoroutine(MoveSwitch());
+                Debug.Log(_animator.name);
+                _animator.SetBool("Pressed", true);
+                //StartCoroutine(MoveSwitch());
+                SwitchAnimation?.Invoke(this.gameObject);
                 switchable.Toggle();
                 _switchAudio.PlaySfx();
             }

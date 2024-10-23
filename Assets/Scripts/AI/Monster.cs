@@ -30,6 +30,7 @@ public class Monster : MonoBehaviour
     private MonsterState _monsterState;
     private LevelManager _levelManager;
     private MonsterAudio _monsterAudio;
+    private MonsterAnimation _monsterAnimation;
     
     // path node logic
     private int _currentNodeIndicator;
@@ -65,6 +66,8 @@ public class Monster : MonoBehaviour
 
         // subscribe to events
         _player.OnPlayerLookingAtMonster += SetIsPlayerLooking;
+        _monsterAnimation = GetComponent<MonsterAnimation>();
+        _monsterAnimation.SetStateToWalk();
     }
     
     private void Update()
@@ -221,6 +224,8 @@ public class Monster : MonoBehaviour
         _agent.enabled = false;
         transform.position = new Vector3(0.0f, -100.0f, 0.0f);
         _currentNodeIndicator = 0;
+        
+        _monsterAnimation.SetStateToWalk();
     }
 
     public void SetMonsterState(MonsterState monsterState, List<Vector3> newPathNodes, Vector3 newPosition)
@@ -234,6 +239,17 @@ public class Monster : MonoBehaviour
         _currentNodeIndicator = 0;
         _pathNodes = newPathNodes;
         _agent.destination = _pathNodes[_currentNodeIndicator];
+
+        if (monsterState == MonsterState.Chase)
+        {
+            Debug.Log("sprint cunt");
+            _monsterAnimation.SetStateToSprint();
+        }
+        else
+        {
+            Debug.Log("walk cunt");
+            _monsterAnimation.SetStateToWalk();
+        }
 
         // Always plays an SFX when state changes
         Debug.Log("monster screeching on state change");
