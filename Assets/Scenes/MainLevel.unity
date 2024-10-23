@@ -146,6 +146,97 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4094620590851880050, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
+--- !u!1001 &35966046
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1978273404}
+    m_Modifications:
+    - target: {fileID: 386510868110298669, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_text
+      value: 'ON THE GROWING NUMBER OF MISSING PERSONS - 19/03/1647
+
+
+        There
+        hath been another snatching, as they have come to be known, yesterday eve.
+        Forty seven happens hath I now made note of. Those whom it is mine charge
+        to protect believe it to be the work of a curse, that this parish would be
+        blighted with an evil for which there is no natural cure.
+
+
+        Mine
+        hope that this affliction would abate are now dashed, I hath turned over
+        every leaf, entered every building, and sought holy council yet to no end.
+        There is no pattern to those whom are snatched. The old, the young. The weak,
+        the strong. Even those of the watch tasked with putting an end to this series
+        of affairs hath themselves been snatched. Mine hands tremble at the thought
+        of the wretched night ahead. Will mine children be hither in the morrow?
+        Will even I be hither to ward against those whom would doth harm?
+
+
+        I
+        hath prayed for all mine years to God almighty; no more. On this night mine
+        prayer will be to It.
+
+
+        Captain of The Watch: Johnathan M. Godfrey.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.37660617
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2886212
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.679907
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215077992433963351, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_Name
+      value: GodfreysReport
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+--- !u!4 &35966047 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+  m_PrefabInstance: {fileID: 35966046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &45822436 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4171591128877956927, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
@@ -368,6 +459,23 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1978273404}
     m_Modifications:
+    - target: {fileID: 386510868110298669, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_text
+      value: "How many months has it been since I first began receiving her letters?
+        The very idea that they could be from her is impossible; she disappeared
+        three years ago and was declared dead. I know this, and yet my heart still
+        aches with every crimson envelope that falls through the letterbox.\n\nI
+        suspect whoever has been delivering these letters to be the same person who
+        wrote them. There is no stamp or address, only my name. Her words talk of
+        our time together and our apartment. Things only she would know. Now, she
+        beckons me forth, to travel far below our apartment to Floor B1. A floor
+        that you won't find on any map or blueprint. \n\nAt first I dismissed her
+        suggestion, but I just can not let her go, not again. I should be fearful,
+        and yet I swell with excitement. I mustn't linger, whatever awaits me I am
+        prepared for. Are you really the author of these letters Anna? Do you wait
+        for me beneath the earth where the light gives way for the rule of darkness?\n\nTonight
+        then. I will have answers to my questions."
+      objectReference: {fileID: 0}
     - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -422,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8215077992433963351, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
       propertyPath: m_Name
-      value: Letter
+      value: InitialText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9134,6 +9242,82 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5059450405710718229, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
+--- !u!1001 &1927619110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1978273404}
+    m_Modifications:
+    - target: {fileID: 386510868110298669, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_text
+      value: "FINAL JOURNAL OF JOHNATHAN M. GODFREY \u2014 April 10th 1647\n\nMine
+        own mind spins. Words hath becometh meaningless, worthless to me, yet mine
+        hand reacheth for mine pen. Two months ago, I made council not with a deaf
+        God, but to It. A glorious being that spake backeth. Tis not a deaf God,
+        but a God who loves its faithful beyond comparison.\n\nInto mine own head
+        did it dance and did fill me with knowledge and love. I shaked, but now I
+        am calm. Did It unlock doors to me, that I never knew did exist; I hath changed
+        forever - soon we shall be joined together in concert.\n\nI wend now to enter
+        union, a metamorphosis from humble fool to All-Knowing. Together we shalt
+        emerge as a being of unknown strength, capable of unspeakable deeds. This
+        world shall be ours."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -89.922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.912
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -165.258
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215077992433963351, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_Name
+      value: FinalEntry
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+--- !u!4 &1927619111 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+  m_PrefabInstance: {fileID: 1927619110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1930969043 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5942100e3dde96f4f8d1b4d77817d939, type: 3}
@@ -9258,6 +9442,9 @@ Transform:
   - {fileID: 1301848591}
   - {fileID: 872217824}
   - {fileID: 143337088}
+  - {fileID: 1927619111}
+  - {fileID: 35966047}
+  - {fileID: 2002755938}
   - {fileID: 1849064043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9382,6 +9569,74 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 390314066262003064, guid: dd9e800df53c65940a264ac6f13d54ec, type: 3}
+--- !u!1001 &2002755937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1978273404}
+    m_Modifications:
+    - target: {fileID: 386510868110298669, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_text
+      value: "MISSING. \n\nANNE ELIZABETH GODFREY, last seen April 14th, around 8
+        O'clock. 28 years old, tall.\n\nAny and all information to be sent forthwith
+        to The Town Watch. \nCAPTAIN GODFREY"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.617
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.82964
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -27.541
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215077992433963351, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+      propertyPath: m_Name
+      value: MissingPoster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+--- !u!4 &2002755938 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4933945630268377229, guid: 4c1e3abc5ac4eba4db0d97e8922f83eb, type: 3}
+  m_PrefabInstance: {fileID: 2002755937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2019576518 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 848844327250522567, guid: 3f638fc7586d8ae48b348857a4c2aeb4, type: 3}
