@@ -6,11 +6,9 @@ public class LightProximitySensor : MonoBehaviour
     {
         if (other.CompareTag("Light"))
         {
-            Debug.Log("collider hitting a light");
             if (other.TryGetComponent(out IMonsterInteractable monsterInteractable))
             {
                 monsterInteractable.AffectedByMonster();
-                Debug.Log("collider trying to affect light");
             }
         }
     }
