@@ -151,7 +151,8 @@ public class PlayerController : MonoBehaviour
     {
         DisableInputActions();
         _playerAudio.PlayDeathSound();
-        _rb.constraints = RigidbodyConstraints.None;
+        _cinemachineCamera.Lens.Dutch = 90.0f;
+        _cinemachineCamera.Target.TrackingTarget = crouch.transform;
         OnPlayerDeath?.Invoke();
     }
 
@@ -240,6 +241,16 @@ public class PlayerController : MonoBehaviour
     public Rigidbody GetRigidBody()
     {
         return _rb;
+    }
+
+    public CinemachineCamera GetCinemachineCamera()
+    {
+        return _cinemachineCamera;
+    }
+
+    public GameObject GetCrouchTransform()
+    {
+        return crouch;
     }
 
     public void SetCurrentInteractable(GameObject interactable)
