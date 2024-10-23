@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ElevatorTest.unity
     guid: 379969b2cf49271518fb1f18bf0992be
+  - enabled: 1
+    path: Assets/Scenes/EndGame.unity
+    guid: 8835feb8db4886f4a88b2c4c7d1a2a9a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 9559f48a82bea84d2a6de18f19dbe57f, type: 3}
   m_UseUCBPForAssetBundles: 0

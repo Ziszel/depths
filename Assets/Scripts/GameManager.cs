@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+        _bestTime = 999999;
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
@@ -49,13 +51,15 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
-        _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
-        _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
-        _optionsMenuCanvas.SetActive(false);
-
-        // Cursor will be shown and not locked on both main menu and game level 
-        // as start of game level shows letter UI
+        if (scene.name != "EndGame")
+        {
+            _optionsMenuCanvas = GameObject.Find("OptionsMenuCanvas");
+            _mainMenuBtn = _optionsMenuCanvas.transform.Find("OptionsMainMenuBtn").gameObject;
+            _resumeBtn = _optionsMenuCanvas.transform.Find("ResumeBtn").gameObject;
+            _optionsMenuCanvas.SetActive(false);
+        }
+        
+        // Cursor will be ALWAYS be shown and not locked at the start
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -71,6 +75,10 @@ public class GameManager : MonoBehaviour
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
             _letterCount = 0;
+        }
+        else if (scene.name == "EndGame")
+        {
+            // don't do anything?
         }
         else // We're in a game level or testing level
         {
@@ -246,7 +254,10 @@ public class GameManager : MonoBehaviour
 
     public void SetBestTime(float newBestTime)
     {
-        _bestTime = newBestTime;
+        if (newBestTime < _bestTime)
+        {
+            _bestTime = newBestTime;
+        }
     }
 
     public float GetBestTime()
