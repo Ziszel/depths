@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
   
     private float _bestTime;
+    private int _letterCount;
 
     /* Primary UIs */
     private GameObject _mainMenuCanvas;
@@ -17,10 +17,6 @@ public class GameManager : MonoBehaviour
     /* UI Buttons */
     private GameObject _mainMenuBtn;
     private GameObject _resumeBtn;
-
-    /* Black Fade Transition */
-    private BlackFadeTransition blackFadeTransition;
-    private GameObject _blackFadeCanvas;
 
     /* Audio */
     private MusicManager _musicManager;
@@ -74,12 +70,12 @@ public class GameManager : MonoBehaviour
             RectTransform rectTransform = _mainMenuBtn.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector3(0, -61, 0);
             _resumeBtn.SetActive(false);
+            _letterCount = 0;
         }
         else // We're in a game level or testing level
         {
             _letterCanvas = GameObject.Find("LetterCanvas");
             _musicManager = GameObject.Find("MusicAudioSource").GetComponentInChildren<MusicManager>();
-            _blackFadeCanvas = GameObject.Find("BlackFadeCanvas");
             monster = GameObject.Find("Monster").GetComponentInChildren<Monster>(); // Get the monster stored so we're able to play chasing/wandering music
             if (monster != null)
             {
@@ -94,9 +90,6 @@ public class GameManager : MonoBehaviour
 
             // First we start game level with a black screen, fading into the letter screen, with music
             ActivateLetter();
-            _blackFadeCanvas.SetActive(true);
-            blackFadeTransition = _blackFadeCanvas.GetComponentInChildren<BlackFadeTransition>();
-            blackFadeTransition.TriggerFadeFromBlack(null);
         }
     }
 
@@ -178,20 +171,18 @@ public class GameManager : MonoBehaviour
 
     public void LetterContinue()
     {
-        // After the player is done reading the letter and they press continue 
-        _blackFadeCanvas.SetActive(true);
-        blackFadeTransition.TriggerFadeToBlackAndBack(DeactivateLetter, null); // This will call DeactivateBlackFade() once fade is complete
-
         DeactivateLetter();
     }
-
-    public void DeactivateBlackFade()
-    {
-        _blackFadeCanvas.SetActive(false);
-    }
-
+    
     public void ActivateLetter()
     {
+        if (_letterCount != 0)
+        {
+            if (_letterCanvas.TryGetComponent(out LetterManager lm))
+            {
+                lm.SetExitButtonFalse();
+            }
+        }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
@@ -200,6 +191,7 @@ public class GameManager : MonoBehaviour
         _musicManager.Play();
 
         _letterCanvas.SetActive(true);
+        _letterCount++;
     }
 
     public void DeactivateLetter()
