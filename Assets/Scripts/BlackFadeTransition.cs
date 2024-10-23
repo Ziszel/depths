@@ -27,6 +27,40 @@ public class BlackFadeTransition : MonoBehaviour
     {
         StartCoroutine(FadeToBlackAndBack(onFadeToBlack, onFadeBackIn));
     }
+    
+    public IEnumerator CalinFadeToBlack()
+    {
+        float elapsedTime = 0;
+        SetBackgroundTransparency(0);
+        // yield return new WaitForSeconds(1f);
+
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            SetBackgroundTransparency(Mathf.Clamp01(elapsedTime / transitionDuration));
+            //Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
+            yield return null;
+        }
+        
+        GameManager.instance.DeactivateLetter();
+        StartCoroutine(CalinFadeFromBlack());
+    }
+    
+    public IEnumerator CalinFadeFromBlack()
+    {
+        float elapsedTime = 0;
+        SetBackgroundTransparency(1);
+        // yield return new WaitForSecondsRealtime(0.5f);
+
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            SetBackgroundTransparency(Mathf.Clamp01(1 - (elapsedTime / transitionDuration)));
+            //Debug.Log("FadeFromBlack called. elapsed time: " + elapsedTime);
+            yield return null;
+        }
+        
+    }
 
     private IEnumerator FadeToBlack(Action onFadeComplete)
     {
@@ -41,8 +75,7 @@ public class BlackFadeTransition : MonoBehaviour
             //Debug.Log("FadeToBlack called. elapsed time: " + elapsedTime);
             yield return null;
         }
-
-        GameManager.instance.DeactivateBlackFade();
+        
         onFadeComplete?.Invoke();
     }
 
@@ -59,8 +92,7 @@ public class BlackFadeTransition : MonoBehaviour
             //Debug.Log("FadeFromBlack called. elapsed time: " + elapsedTime);
             yield return null;
         }
-
-        GameManager.instance.DeactivateBlackFade();
+        
         onFadeComplete?.Invoke();
     }
 
@@ -92,8 +124,7 @@ public class BlackFadeTransition : MonoBehaviour
         }
 
         SetBackgroundTransparency(0); // Ensure it's fully transparent
-
-        GameManager.instance.DeactivateBlackFade();
+        
         onFadeBackIn?.Invoke();
     }
 
