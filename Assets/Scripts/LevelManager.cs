@@ -78,13 +78,14 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            _player.GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             _player.transform.position = checkpointTransform.position;
             _player.transform.rotation = checkpointTransform.rotation;
-            _playerDead = false;
-            _player.EnableInputActions();
         }
+        // Make sure of no unexpected behaviour
+        _playerDead = false;
+        _player.EnableInputActions();
+        _player.GetCinemachineCamera().Lens.Dutch = 0.0f;
+        _player.GetCinemachineCamera().Target.TrackingTarget = _player.GetCrouchTransform().transform;
         
         ResetMonster();
 
@@ -97,7 +98,6 @@ public class LevelManager : MonoBehaviour
 
     public void ResetMonster()
     {
-        Debug.Log("reset monster");
         _monster.SetMonsterState(Monster.MonsterState.None);
     }
 

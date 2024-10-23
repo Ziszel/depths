@@ -345,8 +345,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumChaseTime: 2
+  _pathSpeed: 4
+  _chaseSpeed: 8
   _killRange: 0
-  monsterScreechRate: 2.5
+  monsterScreechRate: 7.5
 --- !u!114 &8107346120527411883
 MonoBehaviour:
   m_ObjectHideFlags: 0
